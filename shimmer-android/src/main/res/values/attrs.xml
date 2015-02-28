@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="ShimmerFrameLayout">
+    <attr name="auto_start" format="boolean"/>
+    <attr name="base_alpha" format="float"/>
+    <attr name="duration" format="integer"/>
+    <attr name="repeat_count" format="integer"/>
+    <attr name="repeat_delay" format="integer"/>
+    <attr name="repeat_mode" format="enum">
+      <enum name="restart" value="1"/>
+      <enum name="reverse" value="2"/>
+    </attr>
+    <attr name="angle" format="enum">
+      <enum name="cw_0" value="0"/>
+      <enum name="cw_90" value="90"/>
+      <enum name="cw_180" value="180"/>
+      <enum name="cw_270" value="270"/>
+    </attr>
+    <attr name="dropoff" format="float"/>
+    <attr name="fixed_width" format="dimension"/>
+    <attr name="fixed_height" format="dimension"/>
+    <attr name="intensity" format="float"/>
+    <attr name="relative_width" format="float"/>
+    <attr name="relative_height" format="float"/>
+    <attr name="shape" format="enum">
+      <enum name="linear" value="0"/>
+      <enum name="radial" value="1"/>
+    </attr>
+    <attr name="tilt" format="float"/>
+  </declare-styleable>
+</resources>

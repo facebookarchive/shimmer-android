@@ -1,0 +1,136 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+    }
+}
+
+apply plugin: 'com.android.library'
+import com.android.builder.core.BuilderConstants
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 19
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'shimmer-android/src/main/AndroidManifest.xml'
+            java.srcDirs = ['shimmer-android/src/main/java']
+            res.srcDirs = ['shimmer-android/src/main/res']
+        }
+    }
+}
+
+// Create jar for distribution.
+android.libraryVariants.all { variant ->
+    def name = variant.buildType.name
+    if (name.equals(BuilderConstants.RELEASE)) {
+        // Distribution Jar Task
+        def distJarTask = task shimmerDistJar(type: Jar, dependsOn: variant.javaCompile) {
+            from variant.javaCompile.destinationDir
+        }
+        artifacts.add('archives', distJarTask)
+
+        // Javadocs Task
+        def javadocsTask = task androidJavadocs(type: Javadoc, dependsOn: variant.javaCompile) {
+            source = variant.javaCompile.source
+            def androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompile.classpath.files, androidJar)
+            options {
+                links "http://docs.oracle.com/javase/7/docs/api/"
+                linksOffline "http://d.android.com/reference","${android.sdkDirectory}/docs/reference"
+            }
+            exclude '**/BuildConfig.java'
+            exclude '**/R.java'
+        }
+        def javadocsJarTask = task androidJavadocsJar(type: Jar, dependsOn: javadocsTask) {
+            classifier = 'javadoc'
+            from javadocsTask.destinationDir
+        }
+        artifacts.add('archives', javadocsJarTask)
+
+        // Sources Jar Task
+        def sourcesJarTask = task androidSourcesJar(type: Jar) {
+            classifier = 'sources'
+            from variant.javaCompile.source
+        }
+        artifacts.add('archives', sourcesJarTask)
+    }
+}
+
+task installExample(dependsOn: 'shimmer-android-example:installDebug')
+task smokeTest(dependsOn: [
+  'shimmer-android:assemble',
+  'shimmer-android:check',
+  'shimmer-android-example:assembleDebug',
+  'shimmerDistJar'
+])
+
+// Configure gradle.properties to do maven builds
+if (!project.hasProperty('sonatypeRepo') ||
+    !project.hasProperty('sonatypeUsername') ||
+    !project.hasProperty('sonatypePassword')) {
+  return;
+}
+
+// Maven Push
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+version = "0.1.0"
+group = "com.facebook.shimmer"
+
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: sonatypeRepo) {
+            authentication(userName: sonatypeUsername, password: sonatypePassword)
+        }
+
+        pom.project {
+            name 'Shimmer'
+            packaging 'jar'
+            description 'Shimmer is a Java library for adding a shimmer effect to a view in an Android application',
+            url 'http://facebook.github.io/shimmer-android'
+
+            scm {
+                url 'scm:git@github.com:facebook/shimmer-android.git'
+                connection 'scm:git@github.com:facebook/shimmer-android.git'
+                developerConnection 'scm:git@github.com:facebook/shimmer-android.git'
+            }
+
+            licenses {
+                license {
+                    name 'BSD 2-Clause License'
+                    url 'https://github.com/facebook/shimmer-android/blob/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'singh.jasleen'
+                    name 'Jasleen Singh'
+                    email 'singh.jasleen@gmail.com'
+                }
+            }
+        }
+    }
+}
