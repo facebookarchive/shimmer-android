@@ -107,7 +107,7 @@ uploadArchives {
         pom.project {
             name 'Shimmer'
             packaging 'jar'
-            description 'Shimmer is a Java library for adding a shimmer effect to a view in an Android application',
+            description 'Shimmer effect for Android applications'
             url 'http://facebook.github.io/shimmer-android'
 
             scm {
@@ -126,11 +126,20 @@ uploadArchives {
 
             developers {
                 developer {
-                    id 'singh.jasleen'
+                    id 'jasleen'
                     name 'Jasleen Singh'
                     email 'singh.jasleen@gmail.com'
                 }
             }
+        }
+    }
+}
+
+task installArchives(type: Upload) {
+    configuration = configurations.archives
+        repositories {
+            mavenDeployer {
+            repository url: "file://${System.properties['user.home']}/.m2/repository"
         }
     }
 }

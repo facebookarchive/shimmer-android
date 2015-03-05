@@ -2,7 +2,6 @@
   android    = //shimmer-android:src
   app        = //shimmer-android-example:bin
   shimmer    = //:shimmer
-  test       = //shimmer-android:test
 
 [project]
   ignore = .git
