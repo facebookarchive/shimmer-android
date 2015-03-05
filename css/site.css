@@ -1,0 +1,151 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+a {
+  color: #ff0040;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.title {
+    font-weight: 300;
+    font-size: 48px;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.section_title {
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 48px;
+}
+
+.content {
+  width: 600px;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  margin-bottom: 100px;
+}
+
+.code {
+  padding-left: 20px;
+}
+
+code, .code {
+  font-size: 14px;
+  font-family: 'Droid Sans Mono', sans-serif;
+  font-weight: normal;
+}
+
+p {
+  font-weight: 300;
+  font-size: 16px;
+  color: #333;
+}
+
+.download_link {
+  margin: 20px 0;
+  background: #ff0040;
+  border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -o-border-radius: 12px;
+  color: #fff;
+  padding: 15px;
+  display: block;
+  font-size:18px;
+  font-weight: 700;
+  width: 180px;
+  text-align: center;
+}
+
+p.license {
+  font-weight: 300;
+}
+
+.header {
+  padding-left: 0px;
+  position: relative;
+}
+
+.usage {
+  position: relative;
+  min-height: 75px;
+  display: table;
+  margin-bottom: 20px;
+}
+
+.usage .description {
+  min-height: 75px;
+  margin: 0;
+  padding-left: 85px;
+  display: table-cell;
+  vertical-align:middle;
+}
+
+a.app_link {
+  color: #333;
+  font-weight: 400;
+}
+
+dt {
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+dd {
+    font-weight: 300;
+}
+
+.logo {
+  width: 75px;
+  height: 75px;
+  display: block;
+  background-size: 75px 75px;
+}
+
+.logo.shimmer {
+  background-image: url(../images/shimmer.png);
+  position: absolute;
+  left: -85px;
+  top: 7px;
+}
+
+.usage .logo {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.logo.home {
+  background-image: url(../images/home.png);
+}
+
+.logo.slingshot {
+  background-image: url(../images/slingshot.png);
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min--moz-device-pixel-ratio: 2),
+(min-resolution: 2dppx),
+(min-resolution: 192dpi) {
+
+  .logo.rebound {
+    background-image: url(../images/shimmer_2x.png);
+  }
+
+  .logo.home {
+    background-image: url(../images/home_2x.png);
+  }
+
+  .logo.slingshot {
+    background-image: url(../images/slingshot_2x.png);
+  }
+
+}

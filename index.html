@@ -1,0 +1,212 @@
+---
+---
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Shimmer effect for Android</title>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Roboto:400,300,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/syntax.css" type="text/css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="css/site.css" type="text/css" media="screen" charset="utf-8">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <div class="content">
+    <div class="header">
+      <div class="logo shimmer"></div>
+      <div class="title">Shimmer</div>
+      <div class="subtitle">Shimmer effect for Android</div>
+    </div>
+
+    <div class="section_title">About</div>
+    <p>
+    <a href="http://github.com/facebook/shimmer-android" target="_blank">Shimmer</a>
+    is a java library that provides an easy way to add a shimmer effect
+    to any view in your Android app. It is useful as an unobtrusive loading
+    indicator. It was originally developed for
+    <a href="https://facebook.com/home" target="_blank">Facebook Home</a>.
+    </p>
+    <p>
+    Shimmer for Android is implemented as a layout, which means that you can simply
+    nest any view inside a <code>ShimmerFrameLayout</code> tag, and call to start
+    the animation from your code. That's all that is required. The layout will use the
+    values you specify either on the tag (using custom attributes) or programmatically
+    in your code, and generate an animation on the fly. See the 
+    <a href="javadoc/index.html" target="_blank">API reference</a> for further details.
+    </p>
+    <p>
+    Here's an example of a composite view, consisting of an image and some text below
+    it, that shows the effect in action:
+    </p>
+    <img style="margin-top: 36px;" src="images/shimmer-small.gif" />
+    <div class="section_title">Download</div>
+    <p>
+    To include Shimmer in your project, grab the latest prebuilt Jar file.
+    <a class="download_link" href="https://github.com/facebook/shimmer-android/releases/latest" target="_blank">↓ Download Jar v0.1.0</a>
+    </p>
+    <p>
+    Alternatively you can include Shimmer for Android from Maven Central via Gradle or Maven.
+    </p>
+    <div class="code">
+    {% highlight groovy %}
+// Gradle dependency on Shimmer for Android
+dependencies {
+  compile 'com.facebook.shimmer:shimmer:0.1.0'
+}
+    {% endhighlight %}
+    </div>
+    <br />
+    <div class="code">
+    {% highlight xml %}
+  <!-- Maven dependency on Shimmer for Android -->
+<dependency>
+  <groupId>com.facebook.shimmer</groupId>
+  <artifactId>shimmer</artifactId>
+  <version>0.1.0</version>
+</dependency>
+    {% endhighlight %}
+    </div>
+    </p>
+    <p>Note that you cannot use the custom attributes on the tag if you use the Jar file. You can instead download the <a href="https://github.com/facebook/shimmer-android/releases/latest">AAR file</a> and reference that locally in your project.
+    </p>
+    <div class="section_title">Building</div>
+    <p>
+    You can use the included Gradle wrapper to build the Shimmer library and sample application locally as well.
+    Check out the code at <a href="http://github.com/facebook/shimmer-android" target="_blank">github.com/facebook/shimmer-android</a>.
+    </p>
+    <div class="code">
+    {% highlight bash %}
+cd $SHIMMER_CHECKOUT
+
+# install the Shimmer sample app
+./gradlew installExample
+
+# build the Android distribution Jar
+./gradlew shimmerDistJar
+    {% endhighlight %}
+    </div>
+    <div class="section_title">Usage</div>
+    <p>
+    The following snippet shows how you can use <code>ShimmerFrameLayout</code>
+    </p>
+    <div class="code">
+    {% highlight xml %}
+<com.facebook.shimmer.ShimmerFrameLayout
+     android:id=“@+id/shimmer_view_container”
+     android:layout_width=“wrap_content”
+     android:layout_height="wrap_content"
+>
+     ...(your complex view here)...
+</com.facebook.shimmer.ShimmerFrameLayout>
+    {% endhighlight %}
+    </div>
+    <p>In your code, you can then start the animation:</p>
+    <div class="code">
+    {% highlight java %}
+ShimmerFrameLayout container = 
+  (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
+container.startShimmerAnimation();
+    {% endhighlight %}
+    </div>
+
+    <div class="section_title">Attributes</div>
+    <p>
+    You can control the look and pace of the effect using a number of custom
+    attributes on the <code>ShimmerFrameLayout</code> tag. Alternatively, you
+    can set these values on the layout object itself. For a comprehensive list,
+    check out the <a href="javadoc/index.html" target="_blank">API reference</a>
+    </p>
+    <dl>
+        <dt>Auto Start</dt><dd>Whether to automatically start the animation when the view is shown, or not.</dd>
+        <dt>Base Alpha</dt><dd>Alpha used to render the base view i.e. the unhighlighted view over which the highlight is drawn.</dd>
+        <dt>Duration</dt><dd>Time it takes for the highlight to move from one end of the layout to the other.</dd>
+        <dt>Repeat Count</dt><dd>Number of times of the current animation will repeat.</dd>
+        <dt>Repeat Delay</dt><dd>Delay after which the current animation will repeat.</dd>
+        <dt>Repeat Mode</dt><dd>What the animation should do after reaching the end, either restart from the beginning or reverse back towards it.</dd>
+        <dt>Mask Shape</dt><dd>Shape of the highlight mask, either with a linear or a circular gradient.</dd>
+        <dt>Angle</dt><dd>Angle at which the highlight mask is animated, from left-to-right, top-to-bottom etc.</dd>
+        <dt>Dropoff</dt><dd>Controls the size of the fading edge of the highlight.</dd>
+        <dt>Intensity</dt><dd>Controls the brightness of the highlight at the center</dd>
+        <dt>Tilt</dt><dd>Angle at which the highlight is <i>tilted</i>, measured in degrees</dd>
+        <dt>Fixed Width, Height</dt><dd>Fixed sized highlight mask, if set, overrides the relative size value</dd>
+        <dt>Relative Width, Height</dt><dd>Size of the highlight mask, relative to the layout it is applied to.</dd>
+    </dl>
+    <div class="section_title">Support</div>
+    <p>
+    Join the discussion over at our <a href="https://www.facebook.com/groups/1405348426440094//" target="_blank">Facebook Group</a> to
+    report bugs, request features or show off your project.
+    </p>
+
+    <div class="section_title">Who is using Shimmer for Android?</div>
+    <p>
+    Open an issue on Github if you are using this component in production and would like to be added to this list.
+    </p>
+    <div class="usages">
+
+      <div class="usage">
+        <a href="https://play.google.com/store/apps/details?id=com.facebook.slingshot" class="logo slingshot" target="_blank"></a>
+        <p class="description">
+          <a class="app_link" href="https://play.google.com/store/apps/details?id=com.facebook.slingshot" target="_blank">Slingshot</a><br />
+          Slingshot uses Shimmer for Android to indicate loading status.
+        </p>
+      </div>
+      <br/>
+      <div class="usage">
+        <a href="https://facebook.com/home" class="logo home" target="_blank"></a>
+        <p class="description">
+          <a class="app_link" href="https://facebook.com/home" target="_blank">Home</a><br />
+          Facebook Home uses the Shimmer effect to indicate status while loading the news feed, notifications and wallpaper settings.
+        </p>
+      </div>
+    </div>
+
+    <div class="section_title">License</div>
+
+    <p>
+    BSD License
+    </p>
+    <p>
+    For Shimmer software
+    </p>
+    <p>
+    Copyright (c) 2015, Facebook, Inc.
+    All rights reserved.
+    </p>
+    <p>
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+    </p>
+    <p>
+    * Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+    </p>
+    <p>
+    * Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+    </p>
+    <p>
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+    </p>
+  </div>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47751506-1', 'facebook.github.io');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
