@@ -682,7 +682,7 @@ public class ShimmerFrameLayout extends FrameLayout {
   protected void onDetachedFromWindow() {
     stopShimmerAnimation();
     if (mGlobalLayoutListener != null) {
-      getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
+      getViewTreeObserver().removeOnGlobalLayoutListener(mGlobalLayoutListener);
       mGlobalLayoutListener = null;
     }
     super.onDetachedFromWindow();
