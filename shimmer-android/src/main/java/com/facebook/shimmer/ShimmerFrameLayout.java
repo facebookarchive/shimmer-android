@@ -743,20 +743,22 @@ public class ShimmerFrameLayout extends FrameLayout {
     try {
       return createBitmapAndGcIfNecessary(width, height);
     } catch (OutOfMemoryError e) {
-      String logMessage = "ShimmerFrameLayout failed to create working bitmap";
-      StringBuilder logMessageStringBuilder = new StringBuilder(logMessage);
-      logMessageStringBuilder.append(" (width = ");
-      logMessageStringBuilder.append(width);
-      logMessageStringBuilder.append(", height = ");
-      logMessageStringBuilder.append(height);
-      logMessageStringBuilder.append(")\n\n");
-      for (StackTraceElement stackTraceElement :
-          Thread.currentThread().getStackTrace()) {
-        logMessageStringBuilder.append(stackTraceElement.toString());
-        logMessageStringBuilder.append("\n");
+      if (BuildConfig.DEBUG) {
+        String logMessage = "ShimmerFrameLayout failed to create working bitmap";
+        StringBuilder logMessageStringBuilder = new StringBuilder(logMessage);
+        logMessageStringBuilder.append(" (width = ");
+        logMessageStringBuilder.append(width);
+        logMessageStringBuilder.append(", height = ");
+        logMessageStringBuilder.append(height);
+        logMessageStringBuilder.append(")\n\n");
+        for (StackTraceElement stackTraceElement :
+                Thread.currentThread().getStackTrace()) {
+            logMessageStringBuilder.append(stackTraceElement.toString());
+            logMessageStringBuilder.append("\n");
+        }
+        logMessage = logMessageStringBuilder.toString();
+        Log.d(TAG, logMessage);
       }
-      logMessage = logMessageStringBuilder.toString();
-      Log.d(TAG, logMessage);
     }
     return null;
   }
