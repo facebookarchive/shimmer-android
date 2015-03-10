@@ -818,8 +818,14 @@ public class ShimmerFrameLayout extends FrameLayout {
 
     int width = mMask.maskWidth(getWidth());
     int height = mMask.maskHeight(getHeight());
-
-    mMaskBitmap = createBitmapAndGcIfNecessary(width, height);
+    
+    try {
+      mMaskBitmap = createBitmapAndGcIfNecessary(width, height);
+    } catch (OutOfMemoryError e){
+      // We don't have the memory to create the bitmap, return null.
+      return null;
+    }
+    
     Canvas canvas = new Canvas(mMaskBitmap);
     Shader gradient;
     switch (mMask.shape) {
@@ -932,17 +938,20 @@ public class ShimmerFrameLayout extends FrameLayout {
   /**
    * Creates a bitmap with the given width and height.
    * <p/>
-   * If it fails with an OutOfMemory error, it will force a GC and then try to create the bitmap
-   * one more time.
+   * Tries to create a bitmap. If it fails, try a GC, then try create again. If it fails a second
+   * time, bubble the exception.
    *
-   * @param width  width of the bitmap
+   * @param width width of the bitmap
    * @param height height of the bitmap
    */
-  protected static Bitmap createBitmapAndGcIfNecessary(int width, int height) {
+  protected static Bitmap createBitmapAndGcIfNecessary(int width, int height)
+      throws OutOfMemoryError {
     try {
       return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     } catch (OutOfMemoryError e) {
       System.gc();
+
+      //If this fails, we've already tried to clear up memory for it so bubble the exception.
       return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     }
   }
