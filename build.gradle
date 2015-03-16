@@ -13,12 +13,12 @@ apply plugin: 'com.android.library'
 import com.android.builder.core.BuilderConstants
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 19
+        minSdkVersion 11
+        targetSdkVersion 21
     }
 
     sourceSets {
