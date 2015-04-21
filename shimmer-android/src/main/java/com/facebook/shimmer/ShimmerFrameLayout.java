@@ -763,6 +763,7 @@ public class ShimmerFrameLayout extends FrameLayout {
 
   // Draws the children without any mask.
   private void drawUnmasked(Canvas renderCanvas) {
+    renderCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
     super.dispatchDraw(renderCanvas);
   }
 
@@ -778,6 +779,7 @@ public class ShimmerFrameLayout extends FrameLayout {
         mMaskOffsetY,
         mMaskOffsetX + maskBitmap.getWidth(),
         mMaskOffsetY + maskBitmap.getHeight());
+    renderCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
     super.dispatchDraw(renderCanvas);
 
     renderCanvas.drawBitmap(maskBitmap, mMaskOffsetX, mMaskOffsetY, mMaskPaint);
