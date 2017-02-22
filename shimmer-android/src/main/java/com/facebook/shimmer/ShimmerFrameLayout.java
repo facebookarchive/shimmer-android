@@ -16,34 +16,43 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
+import android.os.Build;
+import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public class ShimmerFrameLayout extends FrameLayout {
 
   private static final String TAG = "ShimmerFrameLayout";
   private static final PorterDuffXfermode DST_IN_PORTER_DUFF_XFERMODE = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
 
-  // enum specifying the shape of the highlight mask applied to the contained view
-  public enum MaskShape {
-    LINEAR,
-    RADIAL
+  // intdef specifying the shape of the highlight mask applied to the contained view
+  @IntDef({MaskShape.LINEAR, MaskShape.RADIAL})
+  @Retention(RetentionPolicy.SOURCE)
+  public @interface MaskShape {
+    int LINEAR = 0;
+    int RADIAL = 1;
   }
 
-  // enum controlling the angle of the highlight mask animation
-  public enum MaskAngle {
-    CW_0, // left to right
-    CW_90, // top to bottom
-    CW_180, // right to left
-    CW_270, // bottom to top
+  // intdef controlling the angle of the highlight mask animation
+  @IntDef({MaskAngle.CW_0, MaskAngle.CW_90, MaskAngle.CW_180, MaskAngle.CW_270})
+  @Retention(RetentionPolicy.SOURCE)
+  public @interface MaskAngle {
+    int CW_0 = 0; // left to right
+    int CW_90 = 1; // top to bottom
+    int CW_180 = 2; // right to left
+    int CW_270 = 3; // bottom to top
   }
 
   // struct storing various mask related parameters, which are used to construct the mask bitmap
   private static class Mask {
 
-    public MaskAngle angle;
+    public @MaskAngle int angle;
     public float tilt;
     public float dropoff;
     public int fixedWidth;
@@ -51,7 +60,7 @@ public class ShimmerFrameLayout extends FrameLayout {
     public float intensity;
     public float relativeWidth;
     public float relativeHeight;
-    public MaskShape shape;
+    public @MaskShape int shape;
 
     public int maskWidth(int width) {
       return fixedWidth > 0 ? fixedWidth : (int) (width * relativeWidth);
@@ -69,9 +78,9 @@ public class ShimmerFrameLayout extends FrameLayout {
     public int[] getGradientColors() {
       switch (shape) {
         default:
-        case LINEAR:
+        case MaskShape.LINEAR:
           return new int[]{Color.TRANSPARENT, Color.BLACK, Color.BLACK, Color.TRANSPARENT};
-        case RADIAL:
+        case MaskShape.RADIAL:
           return new int[]{Color.BLACK, Color.BLACK, Color.TRANSPARENT};
       }
     }
@@ -84,13 +93,13 @@ public class ShimmerFrameLayout extends FrameLayout {
     public float[] getGradientPositions() {
       switch (shape) {
         default:
-        case LINEAR:
+        case MaskShape.LINEAR:
           return new float[]{
               Math.max((1.0f - intensity - dropoff) / 2, 0.0f),
               Math.max((1.0f - intensity) / 2, 0.0f),
               Math.min((1.0f + intensity) / 2, 1.0f),
               Math.min((1.0f + intensity + dropoff) / 2, 1.0f)};
-        case RADIAL:
+        case MaskShape.RADIAL:
           return new float[]{
               0.0f,
               Math.min(intensity, 1.0f),
@@ -403,7 +412,7 @@ public class ShimmerFrameLayout extends FrameLayout {
    *
    * @return The shape of the highlight mask
    */
-  public MaskShape getMaskShape() {
+  public @MaskShape int getMaskShape() {
     return mMask.shape;
   }
 
@@ -412,7 +421,7 @@ public class ShimmerFrameLayout extends FrameLayout {
    *
    * @param shape The shape of the highlight mask
    */
-  public void setMaskShape(MaskShape shape) {
+  public void setMaskShape(@MaskShape int shape) {
     mMask.shape = shape;
     resetAll();
   }
@@ -428,7 +437,7 @@ public class ShimmerFrameLayout extends FrameLayout {
    *
    * @return The {@link MaskAngle} of the current animation
    */
-  public MaskAngle getAngle() {
+  public @MaskAngle int getAngle() {
     return mMask.angle;
   }
 
@@ -443,7 +452,7 @@ public class ShimmerFrameLayout extends FrameLayout {
    *
    * @param angle The {@link MaskAngle} of the new animation
    */
-  public void setAngle(MaskAngle angle) {
+  public void setAngle(@MaskAngle int angle) {
     mMask.angle = angle;
     resetAll();
   }
@@ -682,7 +691,12 @@ public class ShimmerFrameLayout extends FrameLayout {
   protected void onDetachedFromWindow() {
     stopShimmerAnimation();
     if (mGlobalLayoutListener != null) {
-      getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
+      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+        //noinspection deprecation
+        getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
+      } else {
+        getViewTreeObserver().removeOnGlobalLayoutListener(mGlobalLayoutListener);
+      }
       mGlobalLayoutListener = null;
     }
     super.onDetachedFromWindow();
@@ -826,30 +840,30 @@ public class ShimmerFrameLayout extends FrameLayout {
     Shader gradient;
     switch (mMask.shape) {
       default:
-      case LINEAR: {
+      case MaskShape.LINEAR: {
         int x1, y1;
         int x2, y2;
         switch (mMask.angle) {
           default:
-          case CW_0:
+          case MaskAngle.CW_0:
             x1 = 0;
             y1 = 0;
             x2 = width;
             y2 = 0;
             break;
-          case CW_90:
+          case MaskAngle.CW_90:
             x1 = 0;
             y1 = 0;
             x2 = 0;
             y2 = height;
             break;
-          case CW_180:
+          case MaskAngle.CW_180:
             x1 = width;
             y1 = 0;
             x2 = 0;
             y2 = 0;
             break;
-          case CW_270:
+          case MaskAngle.CW_270:
             x1 = 0;
             y1 = height;
             x2 = 0;
@@ -865,7 +879,7 @@ public class ShimmerFrameLayout extends FrameLayout {
                 Shader.TileMode.REPEAT);
         break;
       }
-      case RADIAL: {
+      case MaskShape.RADIAL: {
         int x = width / 2;
         int y = height / 2;
         gradient =
@@ -899,22 +913,24 @@ public class ShimmerFrameLayout extends FrameLayout {
     int height = getHeight();
     switch (mMask.shape) {
       default:
-      case LINEAR:
+      case MaskShape.LINEAR:
         switch (mMask.angle) {
           default:
-          case CW_0:
+          case MaskAngle.CW_0:
             mMaskTranslation.set(-width, 0, width, 0);
             break;
-          case CW_90:
+          case MaskAngle.CW_90:
             mMaskTranslation.set(0, -height, 0, height);
             break;
-          case CW_180:
+          case MaskAngle.CW_180:
             mMaskTranslation.set(width, 0, -width, 0);
             break;
-          case CW_270:
+          case MaskAngle.CW_270:
             mMaskTranslation.set(0, height, 0, -height);
             break;
         }
+      case MaskShape.RADIAL:
+        break;
     }
     mAnimator = ValueAnimator.ofFloat(0.0f, 1.0f + (float) mRepeatDelay / mDuration);
     mAnimator.setDuration(mDuration + mRepeatDelay);
