@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:2.3.0'
     }
 }
 
@@ -13,12 +13,12 @@ apply plugin: 'com.android.library'
 import com.android.builder.core.BuilderConstants
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 21
+        targetSdkVersion 25
     }
 
     sourceSets {
