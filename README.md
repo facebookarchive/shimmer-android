@@ -1,6 +1,6 @@
-#Shimmer for Android
+# Shimmer for Android
 
-##About
+## About
 
 <a href="http://facebook.github.io/shimmer-android">Shimmer</a> is a java library that
 provides an easy way to add a shimmer effect to any view in your Android app.
@@ -12,7 +12,7 @@ Find more examples and usage instructions over at:
 
 [facebook.github.io/shimmer-android](http://facebook.github.io/shimmer-android)
 
-##License
+## License
 
 BSD License
 
