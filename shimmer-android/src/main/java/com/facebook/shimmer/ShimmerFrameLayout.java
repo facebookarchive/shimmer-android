@@ -15,11 +15,14 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
+import android.graphics.Rect;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 public class ShimmerFrameLayout extends FrameLayout {
 
@@ -712,13 +715,24 @@ public class ShimmerFrameLayout extends FrameLayout {
     if (unmaskBitmap == null || maskBitmap == null) {
       return false;
     }
+
     // First draw a desaturated version
-    drawUnmasked(new Canvas(unmaskBitmap));
-    canvas.drawBitmap(unmaskBitmap, 0, 0, mAlphaPaint);
+    Canvas unmaskedCanvas = new Canvas(unmaskBitmap);
+    unmaskedCanvas.save();
+
+    // Scale up in case there's a difference between the size of the bitmap and the view.
+    unmaskedCanvas.scale(getRenderWidth()/(float)getWidth(), getRenderHeight()/(float)getHeight());
+    drawUnmasked(unmaskedCanvas);
+
+    unmaskedCanvas.restore();
+
+    Rect srcBitmapRect = new Rect(0, 0, getRenderWidth(), getRenderHeight());
+    Rect destBitmapRect = new Rect(0, 0, getWidth(), getHeight());
+    canvas.drawBitmap(unmaskBitmap, srcBitmapRect, destBitmapRect, mAlphaPaint);
 
     // Then draw the masked version
     drawMasked(new Canvas(maskBitmap));
-    canvas.drawBitmap(maskBitmap, 0, 0, null);
+    canvas.drawBitmap(maskBitmap, srcBitmapRect, destBitmapRect, null);
 
     return true;
   }
@@ -738,8 +752,8 @@ public class ShimmerFrameLayout extends FrameLayout {
   }
 
   private Bitmap tryCreateRenderBitmap() {
-    int width = getWidth();
-    int height = getHeight();
+    int width = getRenderWidth();
+    int height = getRenderHeight();
     try {
       return createBitmapAndGcIfNecessary(width, height);
     } catch (OutOfMemoryError e) {
@@ -774,13 +788,29 @@ public class ShimmerFrameLayout extends FrameLayout {
       return;
     }
 
+    renderCanvas.save();
+    float widthScale = getRenderWidth() / (float) getWidth();
+    float heightScale = getRenderHeight() / (float) getHeight();
+    renderCanvas.scale(widthScale, heightScale);
+
+    int scaledX = (int)(mMaskOffsetX/(float)getRenderWidth() * getWidth());
+    int scaledY = (int)(mMaskOffsetY/(float)getRenderHeight() * getHeight());
+
+    renderCanvas.clipRect(
+            scaledX,
+            scaledY,
+            scaledX + getWidth(),
+            scaledY + getHeight());
+
+    renderCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+    super.dispatchDraw(renderCanvas);
+    renderCanvas.restore();
+
     renderCanvas.clipRect(
         mMaskOffsetX,
         mMaskOffsetY,
         mMaskOffsetX + maskBitmap.getWidth(),
         mMaskOffsetY + maskBitmap.getHeight());
-    renderCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-    super.dispatchDraw(renderCanvas);
 
     renderCanvas.drawBitmap(maskBitmap, mMaskOffsetX, mMaskOffsetY, mMaskPaint);
   }
@@ -818,8 +848,8 @@ public class ShimmerFrameLayout extends FrameLayout {
       return mMaskBitmap;
     }
 
-    int width = mMask.maskWidth(getWidth());
-    int height = mMask.maskHeight(getHeight());
+    int width = mMask.maskWidth(getRenderWidth());
+    int height = mMask.maskHeight(getRenderHeight());
 
     mMaskBitmap = createBitmapAndGcIfNecessary(width, height);
     Canvas canvas = new Canvas(mMaskBitmap);
@@ -895,8 +925,8 @@ public class ShimmerFrameLayout extends FrameLayout {
     if (mAnimator != null) {
       return mAnimator;
     }
-    int width = getWidth();
-    int height = getHeight();
+    int width = getRenderWidth();
+    int height = getRenderHeight();
     switch (mMask.shape) {
       default:
       case LINEAR:
@@ -948,4 +978,43 @@ public class ShimmerFrameLayout extends FrameLayout {
       return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     }
   }
+
+
+    /**
+     * When the shimmer layout only has a single child that's an image, we can potentially
+     * significantly reduce the memory footprint for bitmaps we generate by using the intrinsic
+     * height and width of the ImageView's bitmap. In this case we'll end up generating masks that
+     * match the size of the bitmap we're rendering, instead of generating bitmaps that match the
+     * entire size of the view.
+     */
+    private int getRenderWidth() {
+        int width = getWidth();
+        if (getChildCount() == 1 && getChildAt(0) instanceof ImageView) {
+            ImageView imageView = (ImageView) getChildAt(0);
+            if (imageView.getDrawable() instanceof BitmapDrawable) {
+                width = imageView.getDrawable().getIntrinsicWidth();
+            }
+        }
+
+        return width;
+    }
+
+    /**
+     * When the shimmer layout only has a single child that's an image, we can potentially
+     * significantly reduce the memory footprint for bitmaps we generate by using the intrinsic
+     * height and width of the ImageView's bitmap. In this case we'll end up generating masks that
+     * match the size of the bitmap we're rendering, instead of generating bitmaps that match the
+     * entire size of the view.
+     */
+    private int getRenderHeight() {
+        int height = getHeight();
+        if (getChildCount() == 1 && getChildAt(0) instanceof ImageView) {
+            ImageView imageView = (ImageView) getChildAt(0);
+            if (imageView.getDrawable() instanceof BitmapDrawable) {
+                height = imageView.getDrawable().getIntrinsicHeight();
+            }
+        }
+
+        return height;
+    }
 }
