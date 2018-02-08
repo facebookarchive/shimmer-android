@@ -1,0 +1,168 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+def isReleaseBuild() {
+  return VERSION_NAME.contains("SNAPSHOT") == false
+}
+
+def getRepositoryUrl() {
+  return findProperty('repositoryUrl') ? property('repositoryUrl') : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+def getRepositoryUsername() {
+  return findProperty('repositoryUsername') ? property('repositoryUsername') : ""
+}
+
+def getRepositoryPassword() {
+  return findProperty('repositoryPassword') ? property('repositoryPassword') : ""
+}
+
+def configureShimmerPom(def pom) {
+  pom.whenConfigured {
+    applyOptionalDeps it, getOptionalDeps()
+  }
+  pom.project {
+    name POM_NAME
+    artifactId POM_ARTIFACT_ID
+    packaging POM_PACKAGING
+    description 'Shimmer effect for Android applications'
+    url 'http://facebook.github.io/shimmer-android'
+
+    scm {
+      url 'https://github.com/facebook/shimmer-android.git'
+      connection 'scm:git@github.com:facebook/shimmer-android.git'
+      developerConnection 'scm:git@github.com:facebook/shimmer-android.git'
+    }
+
+    licenses {
+      license {
+        name 'BSD 2-Clause License'
+        url 'https://github.com/facebook/shimmer-android/blob/master/LICENSE'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'facebook'
+        name 'Facebook'
+      }
+    }
+  }
+}
+
+// Hack to modify the resulting pom's dependencies to use
+// <optional>true</optional> where appropriate.
+def applyOptionalDeps(def pom, def optionalDeps) {
+  pom.dependencies.each { dep ->
+    def artifactLabel = dep.groupId + ':' + dep.artifactId
+    if (optionalDeps.contains(artifactLabel)) {
+      dep.optional = true
+    }
+  }
+}
+
+def getOptionalDeps() {
+  if (hasProperty('POM_OPTIONAL_DEPS')) {
+    return property('POM_OPTIONAL_DEPS').split(',') as Set
+  } else {
+    return []
+  }
+}
+
+if (property('POM_PACKAGING') == 'aar') {
+  afterEvaluate { project ->
+    task androidJavadoc(type: Javadoc) {
+      source = android.sourceSets.main.java.srcDirs
+      classpath += files(android.bootClasspath)
+      exclude "**/BUCK"
+
+      project.android.libraryVariants.all { variant ->
+        if (variant.name == "release") {
+          classpath += files(variant.javaCompile.classpath.files)
+        }
+      }
+
+      if (JavaVersion.current().isJava8Compatible()) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+      }
+    }
+
+    task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
+      classifier = 'javadoc'
+      from androidJavadoc.destinationDir
+    }
+
+    task androidSourcesJar(type: Jar) {
+      classifier = 'sources'
+      from android.sourceSets.main.java.srcDirs
+    }
+
+    android.libraryVariants.all { variant ->
+      def name = variant.name.capitalize()
+      task "jar${name}"(type: Jar, dependsOn: variant.javaCompile) {
+        from variant.javaCompile.destinationDir
+        exclude '**/BuildConfig.class'
+        exclude '**/R.class'
+      }
+    }
+    artifacts {
+      archives androidSourcesJar
+      archives androidJavadocJar
+      archives jarRelease
+    }
+
+  }
+} else {
+  task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+  }
+
+  task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+  }
+
+  artifacts {
+    archives sourcesJar
+    archives javadocJar
+  }
+}
+
+afterEvaluate { project ->
+  version = VERSION_NAME
+  group = GROUP
+
+  signing {
+    required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+  }
+
+  uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+      beforeDeployment {
+        MavenDeployment deployment -> signing.signPom(deployment)
+      }
+
+      repository(url: getRepositoryUrl()) {
+        authentication(
+            userName: getRepositoryUsername(),
+            password: getRepositoryPassword())
+      }
+
+      configureShimmerPom pom
+    }
+  }
+
+  task installArchives(type: Upload) {
+    configuration = configurations.archives
+    repositories {
+      mavenDeployer {
+        repository url: "file://${System.properties['user.home']}/.m2/repository"
+        configureShimmerPom pom
+      }
+    }
+  }
+}

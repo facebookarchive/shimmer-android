@@ -1,8 +1,5 @@
 apply plugin: 'com.android.library'
 
-dependencies {
-}
-
 android {
   compileSdkVersion versions.compileSdk
 
@@ -10,13 +7,6 @@ android {
     minSdkVersion versions.minSdk
     targetSdkVersion versions.targetSdk
   }
-
-  sourceSets {
-    main {
-      manifest.srcFile 'src/main/AndroidManifest.xml'
-      java.srcDirs = ['src/main/java']
-      res.srcDirs = ['src/main/res']
-    }
-  }
 }
 
+apply from: rootProject.file("release.gradle")
