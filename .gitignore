@@ -1,5 +1,6 @@
 *.iml
 .idea
+!.idea/codeStyleSettings.xml
 .gradle
 gen
 local.properties
