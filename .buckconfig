@@ -1,7 +1,0 @@
-[alias]
-  android    = //shimmer-android:src
-  app        = //shimmer-android-example:bin
-  shimmer    = //:shimmer
-
-[project]
-  ignore = .git
