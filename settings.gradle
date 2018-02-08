@@ -1,1 +1,1 @@
-include ':shimmer-android', ':shimmer-android-example'
+include ':shimmer', ':shimmer-android-example'
