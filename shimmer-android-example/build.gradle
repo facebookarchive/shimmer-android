@@ -1,30 +1,29 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile project(':shimmer-android')
+  compile project(':shimmer-android')
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+  compileSdkVersion versions.compileSdk
 
-    defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 21
-    }
+  defaultConfig {
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.targetSdk
+  }
 
-    signingConfigs {
-        debug {
-            storeFile file("debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
+  signingConfigs {
+    debug {
+      storeFile file("debug.keystore")
+      storePassword "android"
+      keyAlias "androiddebugkey"
+      keyPassword "android"
     }
+  }
 
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
+  buildTypes {
+    debug {
+      signingConfig signingConfigs.debug
     }
+  }
 }

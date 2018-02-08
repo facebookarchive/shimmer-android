@@ -1,77 +1,78 @@
 buildscript {
-    repositories {
-        mavenCentral()
-    }
+  apply from: rootProject.file('versions.gradle')
+  repositories {
+    jcenter()
+    google()
+  }
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-    }
+  dependencies {
+    classpath plugs.agp
+  }
 }
 
 apply plugin: 'com.android.library'
 import com.android.builder.core.BuilderConstants
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+  compileSdkVersion versions.compileSdk
 
-    defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 21
-    }
+  defaultConfig {
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.targetSdk
+  }
 
-    sourceSets {
-        main {
-            manifest.srcFile 'shimmer-android/src/main/AndroidManifest.xml'
-            java.srcDirs = ['shimmer-android/src/main/java']
-            res.srcDirs = ['shimmer-android/src/main/res']
-        }
+  sourceSets {
+    main {
+      manifest.srcFile 'shimmer-android/src/main/AndroidManifest.xml'
+      java.srcDirs = ['shimmer-android/src/main/java']
+      res.srcDirs = ['shimmer-android/src/main/res']
     }
+  }
 }
 
 // Create jar for distribution.
 android.libraryVariants.all { variant ->
-    def name = variant.buildType.name
-    if (name.equals(BuilderConstants.RELEASE)) {
-        // Distribution Jar Task
-        def distJarTask = task shimmerDistJar(type: Jar, dependsOn: variant.javaCompile) {
-            from variant.javaCompile.destinationDir
-        }
-        artifacts.add('archives', distJarTask)
-
-        // Javadocs Task
-        def javadocsTask = task androidJavadocs(type: Javadoc, dependsOn: variant.javaCompile) {
-            source = variant.javaCompile.source
-            def androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
-            classpath = files(variant.javaCompile.classpath.files, androidJar)
-            options {
-                links "http://docs.oracle.com/javase/7/docs/api/"
-                linksOffline "http://d.android.com/reference","${android.sdkDirectory}/docs/reference"
-            }
-            exclude '**/BuildConfig.java'
-            exclude '**/R.java'
-        }
-        def javadocsJarTask = task androidJavadocsJar(type: Jar, dependsOn: javadocsTask) {
-            classifier = 'javadoc'
-            from javadocsTask.destinationDir
-        }
-        artifacts.add('archives', javadocsJarTask)
-
-        // Sources Jar Task
-        def sourcesJarTask = task androidSourcesJar(type: Jar) {
-            classifier = 'sources'
-            from variant.javaCompile.source
-        }
-        artifacts.add('archives', sourcesJarTask)
+  def name = variant.buildType.name
+  if (name.equals(BuilderConstants.RELEASE)) {
+    // Distribution Jar Task
+    def distJarTask = task shimmerDistJar(type: Jar, dependsOn: variant.javaCompile) {
+      from variant.javaCompile.destinationDir
     }
+    artifacts.add('archives', distJarTask)
+
+    // Javadocs Task
+    def javadocsTask = task androidJavadocs(type: Javadoc, dependsOn: variant.javaCompile) {
+      source = variant.javaCompile.source
+      def androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+      classpath = files(variant.javaCompile.classpath.files, androidJar)
+      options {
+        links "http://docs.oracle.com/javase/7/docs/api/"
+        linksOffline "http://d.android.com/reference", "${android.sdkDirectory}/docs/reference"
+      }
+      exclude '**/BuildConfig.java'
+      exclude '**/R.java'
+    }
+    def javadocsJarTask = task androidJavadocsJar(type: Jar, dependsOn: javadocsTask) {
+      classifier = 'javadoc'
+      from javadocsTask.destinationDir
+    }
+    artifacts.add('archives', javadocsJarTask)
+
+    // Sources Jar Task
+    def sourcesJarTask = task androidSourcesJar(type: Jar) {
+      classifier = 'sources'
+      from variant.javaCompile.source
+    }
+    artifacts.add('archives', sourcesJarTask)
+  }
 }
 
 task installExample(dependsOn: 'shimmer-android-example:installDebug')
 task smokeTest(dependsOn: [
-  'shimmer-android:assemble',
-  'shimmer-android:check',
-  'shimmer-android-example:assembleDebug',
-  'shimmerDistJar'
+    'shimmer-android:assemble',
+    'shimmer-android:check',
+    'shimmer-android-example:assembleDebug',
+    'shimmerDistJar'
 ])
 
 // Configure gradle.properties to do maven builds
@@ -90,54 +91,54 @@ version = "0.1.0"
 group = "com.facebook.shimmer"
 
 signing {
-    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
+  required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+  sign configurations.archives
 }
 
 uploadArchives {
-    configuration = configurations.archives
-    repositories.mavenDeployer {
-        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+  configuration = configurations.archives
+  repositories.mavenDeployer {
+    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-        repository(url: sonatypeRepo) {
-            authentication(userName: sonatypeUsername, password: sonatypePassword)
-        }
-
-        pom.project {
-            name 'Shimmer'
-            packaging 'jar'
-            description 'Shimmer effect for Android applications'
-            url 'http://facebook.github.io/shimmer-android'
-
-            scm {
-                url 'scm:git@github.com:facebook/shimmer-android.git'
-                connection 'scm:git@github.com:facebook/shimmer-android.git'
-                developerConnection 'scm:git@github.com:facebook/shimmer-android.git'
-            }
-
-            licenses {
-                license {
-                    name 'BSD 2-Clause License'
-                    url 'https://github.com/facebook/shimmer-android/blob/master/LICENSE'
-                    distribution 'repo'
-                }
-            }
-
-            developers {
-                developer {
-                    id 'facebook'
-                    name 'Facebook'
-                }
-            }
-        }
+    repository(url: sonatypeRepo) {
+      authentication(userName: sonatypeUsername, password: sonatypePassword)
     }
+
+    pom.project {
+      name 'Shimmer'
+      packaging 'jar'
+      description 'Shimmer effect for Android applications'
+      url 'http://facebook.github.io/shimmer-android'
+
+      scm {
+        url 'scm:git@github.com:facebook/shimmer-android.git'
+        connection 'scm:git@github.com:facebook/shimmer-android.git'
+        developerConnection 'scm:git@github.com:facebook/shimmer-android.git'
+      }
+
+      licenses {
+        license {
+          name 'BSD 2-Clause License'
+          url 'https://github.com/facebook/shimmer-android/blob/master/LICENSE'
+          distribution 'repo'
+        }
+      }
+
+      developers {
+        developer {
+          id 'facebook'
+          name 'Facebook'
+        }
+      }
+    }
+  }
 }
 
 task installArchives(type: Upload) {
-    configuration = configurations.archives
-        repositories {
-            mavenDeployer {
-            repository url: "file://${System.properties['user.home']}/.m2/repository"
-        }
+  configuration = configurations.archives
+  repositories {
+    mavenDeployer {
+      repository url: "file://${System.properties['user.home']}/.m2/repository"
     }
+  }
 }

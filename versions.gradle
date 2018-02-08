@@ -1,0 +1,19 @@
+ext {
+  final supportLibraryVersion = '26.1.0'
+
+  versions = [
+      targetSdk : 26,
+      compileSdk: 26,
+      minSdk    : 11,
+      buildTools: '26.0.2',
+  ]
+
+  plugs = [
+      "agp": "com.android.tools.build:gradle:3.0.0",
+  ]
+
+  deps = [
+      supportAppCompat: "com.android.support:appcompat-v7:$supportLibraryVersion",
+      supportDesign   : "com.android.support:design:$supportLibraryVersion",
+  ]
+}
