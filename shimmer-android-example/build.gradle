@@ -1,29 +1,33 @@
-apply plugin: 'com.android.application'
-
-dependencies {
-  compile project(':shimmer-android')
+buildscript {
+  repositories {
+    mavenLocal()
+    jcenter()
+    google()
+  }
 }
+
+allprojects {
+  repositories {
+    mavenLocal()
+    jcenter()
+    google()
+  }
+}
+
+apply plugin: 'com.android.application'
 
 android {
   compileSdkVersion versions.compileSdk
 
   defaultConfig {
+    applicationId 'com.facebook.shimmer.sample'
     minSdkVersion versions.minSdk
     targetSdkVersion versions.targetSdk
+    versionCode 1
+    versionName '1.0'
   }
+}
 
-  signingConfigs {
-    debug {
-      storeFile file("debug.keystore")
-      storePassword "android"
-      keyAlias "androiddebugkey"
-      keyPassword "android"
-    }
-  }
-
-  buildTypes {
-    debug {
-      signingConfig signingConfigs.debug
-    }
-  }
+dependencies {
+  implementation deps.shimmer
 }
