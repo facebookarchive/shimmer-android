@@ -8,7 +8,7 @@ ext {
 
   plugs = [
       "agp": "com.android.tools.build:gradle:3.0.0",
-      "mavenGradle": "com.github.dcendents:android-maven-gradle-plugin:1.5",
+      "mavenGradle": "com.github.dcendents:android-maven-gradle-plugin:2.0",
   ]
 
   deps = [
