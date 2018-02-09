@@ -103,7 +103,6 @@ if (property('POM_PACKAGING') == 'aar') {
       task "jar${name}"(type: Jar, dependsOn: variant.javaCompile) {
         from variant.javaCompile.destinationDir
         exclude '**/BuildConfig.class'
-        exclude '**/R.class'
       }
     }
     artifacts {
