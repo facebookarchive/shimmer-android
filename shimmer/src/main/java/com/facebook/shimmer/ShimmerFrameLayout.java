@@ -165,27 +165,27 @@ public class ShimmerFrameLayout extends FrameLayout {
     if (attrs != null) {
       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ShimmerFrameLayout, 0, 0);
       try {
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_auto_start)) {
-          setAutoStart(a.getBoolean(R.styleable.ShimmerFrameLayout_auto_start, false));
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_auto_start)) {
+          setAutoStart(a.getBoolean(R.styleable.ShimmerFrameLayout_shimmer_auto_start, false));
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_base_alpha)) {
-          setBaseAlpha(a.getFloat(R.styleable.ShimmerFrameLayout_base_alpha, 0));
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_base_alpha)) {
+          setBaseAlpha(a.getFloat(R.styleable.ShimmerFrameLayout_shimmer_base_alpha, 0));
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_duration)) {
-          setDuration(a.getInt(R.styleable.ShimmerFrameLayout_duration, 0));
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_duration)) {
+          setDuration(a.getInt(R.styleable.ShimmerFrameLayout_shimmer_duration, 0));
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_repeat_count)) {
-          setRepeatCount(a.getInt(R.styleable.ShimmerFrameLayout_repeat_count, 0));
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_repeat_count)) {
+          setRepeatCount(a.getInt(R.styleable.ShimmerFrameLayout_shimmer_repeat_count, 0));
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_repeat_delay)) {
-          setRepeatDelay(a.getInt(R.styleable.ShimmerFrameLayout_repeat_delay, 0));
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_repeat_delay)) {
+          setRepeatDelay(a.getInt(R.styleable.ShimmerFrameLayout_shimmer_repeat_delay, 0));
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_repeat_mode)) {
-          setRepeatMode(a.getInt(R.styleable.ShimmerFrameLayout_repeat_mode, 0));
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_repeat_mode)) {
+          setRepeatMode(a.getInt(R.styleable.ShimmerFrameLayout_shimmer_repeat_mode, 0));
         }
 
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_angle)) {
-          int angle = a.getInt(R.styleable.ShimmerFrameLayout_angle, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_angle)) {
+          int angle = a.getInt(R.styleable.ShimmerFrameLayout_shimmer_angle, 0);
           switch (angle) {
             default:
             case 0:
@@ -203,8 +203,8 @@ public class ShimmerFrameLayout extends FrameLayout {
           }
         }
 
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_shape)) {
-          int shape = a.getInt(R.styleable.ShimmerFrameLayout_shape, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_shape)) {
+          int shape = a.getInt(R.styleable.ShimmerFrameLayout_shimmer_shape, 0);
           switch (shape) {
             default:
             case 0:
@@ -216,26 +216,26 @@ public class ShimmerFrameLayout extends FrameLayout {
           }
         }
 
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_dropoff)) {
-          mMask.dropoff = a.getFloat(R.styleable.ShimmerFrameLayout_dropoff, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_dropoff)) {
+          mMask.dropoff = a.getFloat(R.styleable.ShimmerFrameLayout_shimmer_dropoff, 0);
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_fixed_width)) {
-          mMask.fixedWidth = a.getDimensionPixelSize(R.styleable.ShimmerFrameLayout_fixed_width, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_fixed_width)) {
+          mMask.fixedWidth = a.getDimensionPixelSize(R.styleable.ShimmerFrameLayout_shimmer_fixed_width, 0);
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_fixed_height)) {
-          mMask.fixedHeight = a.getDimensionPixelSize(R.styleable.ShimmerFrameLayout_fixed_height, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_fixed_height)) {
+          mMask.fixedHeight = a.getDimensionPixelSize(R.styleable.ShimmerFrameLayout_shimmer_fixed_height, 0);
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_intensity)) {
-          mMask.intensity = a.getFloat(R.styleable.ShimmerFrameLayout_intensity, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_intensity)) {
+          mMask.intensity = a.getFloat(R.styleable.ShimmerFrameLayout_shimmer_intensity, 0);
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_relative_width)) {
-          mMask.relativeWidth = a.getFloat(R.styleable.ShimmerFrameLayout_relative_width, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_relative_width)) {
+          mMask.relativeWidth = a.getFloat(R.styleable.ShimmerFrameLayout_shimmer_relative_width, 0);
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_relative_height)) {
-          mMask.relativeHeight = a.getFloat(R.styleable.ShimmerFrameLayout_relative_height, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_relative_height)) {
+          mMask.relativeHeight = a.getFloat(R.styleable.ShimmerFrameLayout_shimmer_relative_height, 0);
         }
-        if (a.hasValue(R.styleable.ShimmerFrameLayout_tilt)) {
-          mMask.tilt = a.getFloat(R.styleable.ShimmerFrameLayout_tilt, 0);
+        if (a.hasValue(R.styleable.ShimmerFrameLayout_shimmer_tilt)) {
+          mMask.tilt = a.getFloat(R.styleable.ShimmerFrameLayout_shimmer_tilt, 0);
         }
       } finally {
         a.recycle();

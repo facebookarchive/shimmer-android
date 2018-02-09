@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+
     setContentView(R.layout.main);
     mShimmerViewContainer = (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
 
