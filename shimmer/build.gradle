@@ -6,7 +6,6 @@ android {
 
   defaultConfig {
     minSdkVersion versions.minSdk
-    targetSdkVersion versions.targetSdk
   }
 }
 
