@@ -10,12 +10,3 @@ buildscript {
     classpath plugs.mavenGradle
   }
 }
-
-task installExample(dependsOn: 'shimmer-android-example:installDebug')
-task smokeTest(dependsOn: [
-    'shimmer-android:assemble',
-    'shimmer-android:check',
-    'shimmer-android-example:assembleDebug',
-    'shimmerDistJar'
-])
-
