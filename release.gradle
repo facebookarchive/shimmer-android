@@ -2,7 +2,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 def isReleaseBuild() {
-  return VERSION_NAME.contains("SNAPSHOT") == false
+  return !VERSION_NAME.contains("SNAPSHOT")
 }
 
 def getRepositoryUrl() {
