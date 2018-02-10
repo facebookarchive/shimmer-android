@@ -551,7 +551,7 @@ public class ShimmerFrameLayout extends FrameLayout {
    *
    * @param relativeWidth Relative width of the highlight mask.
    */
-  public void setRelativeWidth(int relativeWidth) {
+  public void setRelativeWidth(float relativeWidth) {
     mMask.relativeWidth = relativeWidth;
     resetAll();
   }
@@ -571,7 +571,7 @@ public class ShimmerFrameLayout extends FrameLayout {
    *
    * @param relativeHeight Relative height of the highlight mask.
    */
-  public void setRelativeHeight(int relativeHeight) {
+  public void setRelativeHeight(float relativeHeight) {
     mMask.relativeHeight = relativeHeight;
     resetAll();
   }
