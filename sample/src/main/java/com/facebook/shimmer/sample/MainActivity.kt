@@ -10,7 +10,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.facebook.shimmer.example
+package com.facebook.shimmer.sample
 
 import android.animation.ObjectAnimator
 import android.app.Activity
