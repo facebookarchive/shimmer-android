@@ -4,6 +4,11 @@ buildscript {
     jcenter()
     google()
   }
+
+  dependencies {
+    classpath plugs.agp
+    classpath plugs.kotlin
+  }
 }
 
 allprojects {
@@ -15,6 +20,8 @@ allprojects {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
   compileSdkVersion versions.compileSdk
@@ -30,4 +37,5 @@ android {
 
 dependencies {
   implementation deps.shimmer
+  implementation deps.kotlinStdlib
 }

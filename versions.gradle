@@ -4,14 +4,17 @@ ext {
       compileSdk: 26,
       minSdk    : 11,
       buildTools: '26.0.2',
+      kotlin    : '1.2.21'
   ]
 
   plugs = [
-      "agp": "com.android.tools.build:gradle:3.0.1",
+      "agp"        : "com.android.tools.build:gradle:3.0.1",
       "mavenGradle": "com.github.dcendents:android-maven-gradle-plugin:2.0",
+      "kotlin"     : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
   ]
 
   deps = [
-      shimmer: "com.facebook.shimmer:shimmer:$VERSION_NAME"
+      shimmer     : "com.facebook.shimmer:shimmer:$VERSION_NAME",
+      kotlinStdlib: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}",
   ]
 }
