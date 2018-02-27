@@ -12,12 +12,13 @@
 
 package com.facebook.shimmer.sample
 
-import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.main.*
 
@@ -48,11 +49,11 @@ class MainActivity : Activity(), View.OnClickListener {
 
   public override fun onResume() {
     super.onResume()
-    shimmerViewContainer.startShimmerAnimation()
+    shimmerViewContainer.startShimmer()
   }
 
   public override fun onPause() {
-    shimmerViewContainer.stopShimmerAnimation()
+    shimmerViewContainer.stopShimmer()
     super.onPause()
   }
 
@@ -67,54 +68,47 @@ class MainActivity : Activity(), View.OnClickListener {
     currentPreset = preset
     presetButtons[currentPreset].setBackgroundResource(R.color.preset_button_background_selected)
 
-    // Save the state of the animation
-    val isPlaying = shimmerViewContainer.isAnimationStarted
-
-    // Reset all parameters of the shimmer animation
-    shimmerViewContainer.useDefaults()
-
     // If a toast is already showing, hide it
     toast?.cancel()
 
-    when (preset) {
-      1 -> {
-        // Slow and reverse
-        shimmerViewContainer.duration = 5000
-        shimmerViewContainer.repeatMode = ObjectAnimator.REVERSE
-        toast = Toast.makeText(this, "Slow and reverse", Toast.LENGTH_SHORT)
-      }
-      2 -> {
-        // Thin, straight and transparent
-        shimmerViewContainer.baseAlpha = 0.1f
-        shimmerViewContainer.dropoff = 0.1f
-        shimmerViewContainer.tilt = 0f
-        toast = Toast.makeText(this, "Thin, straight and transparent", Toast.LENGTH_SHORT)
-      }
-      3 -> {
-        // Sweep angle 90
-        shimmerViewContainer.angle = ShimmerFrameLayout.MaskAngle.CW_90
-        toast = Toast.makeText(this, "Sweep angle 90", Toast.LENGTH_SHORT)
-      }
-      4 -> {
-        // Spotlight
-        shimmerViewContainer.baseAlpha = 0f
-        shimmerViewContainer.duration = 2000
-        shimmerViewContainer.dropoff = 0.1f
-        shimmerViewContainer.intensity = 0.35f
-        shimmerViewContainer.maskShape = ShimmerFrameLayout.MaskShape.RADIAL
-        toast = Toast.makeText(this, "Spotlight", Toast.LENGTH_SHORT)
-      }
-      else -> toast = Toast.makeText(this, "Default", Toast.LENGTH_SHORT)
-    }
+    val shimmerBuilder = Shimmer.AlphaHighlightBuilder()
+    shimmerViewContainer.setShimmer(
+        when (preset) {
+          1 -> {
+            // Slow and reverse
+            toast = Toast.makeText(this, "Slow and reverse", Toast.LENGTH_SHORT)
+            shimmerBuilder.setDuration(5000L).setRepeatMode(ValueAnimator.REVERSE)
+          }
+          2 -> {
+            // Thin, straight and transparent
+            toast = Toast.makeText(this, "Thin, straight and transparent", Toast.LENGTH_SHORT)
+            shimmerBuilder.setBaseAlpha(0.1f).setDropoff(0.1f).setTilt(0f)
+          }
+          3 -> {
+            // Sweep angle 90
+            toast = Toast.makeText(this, "Sweep angle 90", Toast.LENGTH_SHORT)
+            shimmerBuilder.setDirection(Shimmer.Direction.TOP_TO_BOTTOM)
+
+          }
+          4 -> {
+            // Spotlight
+            toast = Toast.makeText(this, "Spotlight", Toast.LENGTH_SHORT)
+            shimmerBuilder.setBaseAlpha(0f)
+                .setDuration(2000L)
+                .setDropoff(0.1f)
+                .setIntensity(0.35f)
+                .setShape(Shimmer.Shape.RADIAL)
+          }
+          else -> {
+            toast = Toast.makeText(this, "Default", Toast.LENGTH_SHORT)
+            shimmerBuilder
+          }
+        }.build()
+    )
 
     // Show toast describing the chosen preset, if necessary
     if (showToast) {
       toast?.show()
-    }
-
-    // Setting a value on the shimmer layout stops the animation. Restart it, if necessary.
-    if (isPlaying) {
-      shimmerViewContainer.startShimmerAnimation()
     }
   }
 }

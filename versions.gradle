@@ -1,19 +1,21 @@
 ext {
   versions = [
-      targetSdk : 26,
-      compileSdk: 26,
-      minSdk    : 11,
-      buildTools: '26.0.2',
-      kotlin    : '1.2.21'
+      targetSdk     : 26,
+      compileSdk    : 26,
+      minSdk        : 14,
+      buildTools    : '26.0.2',
+      kotlin        : '1.2.21',
+      supportLibrary: '27.0.2',
   ]
 
   plugs = [
-      "agp"        : "com.android.tools.build:gradle:3.0.1",
-      "kotlin"     : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+      "agp"   : "com.android.tools.build:gradle:3.0.1",
+      "kotlin": "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
   ]
 
   deps = [
-      shimmer     : "com.facebook.shimmer:shimmer:$VERSION_NAME",
-      kotlinStdlib: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}",
+      shimmer           : "com.facebook.shimmer:shimmer:$VERSION_NAME",
+      kotlinStdlib      : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}",
+      supportAnnotations: "com.android.support:support-annotations:${versions.supportLibrary}",
   ]
 }

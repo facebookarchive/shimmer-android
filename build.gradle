@@ -9,3 +9,9 @@ buildscript {
     classpath plugs.agp
   }
 }
+
+allprojects {
+  repositories {
+    google()
+  }
+}

@@ -32,7 +32,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="20dp"
           android:gravity="center"
-          android:text="Facebook’s mission is to give people the power to share and make the world more open and connected."
+          android:text="Facebook’s mission is to give people the power to build community and bring the world closer together."
           style="@style/thin.white.large"/>
     </LinearLayout>
   </com.facebook.shimmer.ShimmerFrameLayout>

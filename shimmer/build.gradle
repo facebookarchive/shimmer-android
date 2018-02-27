@@ -8,4 +8,8 @@ android {
   }
 }
 
+dependencies {
+  implementation deps.supportAnnotations
+}
+
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

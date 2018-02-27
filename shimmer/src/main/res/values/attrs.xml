@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <declare-styleable name="ShimmerFrameLayout">
-    <attr name="shimmer_auto_start" format="boolean"/>
+    <attr name="shimmer_clip_to_children" format="boolean"/>
+    <attr name="shimmer_colored" format="boolean"/>
+    <attr name="shimmer_base_color" format="color"/>
+    <attr name="shimmer_highlight_color" format="color"/>
     <attr name="shimmer_base_alpha" format="float"/>
+    <attr name="shimmer_highlight_alpha" format="float"/>
+    <attr name="shimmer_auto_start" format="boolean"/>
     <attr name="shimmer_duration" format="integer"/>
     <attr name="shimmer_repeat_count" format="integer"/>
     <attr name="shimmer_repeat_delay" format="integer"/>
@@ -10,18 +15,18 @@
       <enum name="restart" value="1"/>
       <enum name="reverse" value="2"/>
     </attr>
-    <attr name="shimmer_angle" format="enum">
-      <enum name="cw_0" value="0"/>
-      <enum name="cw_90" value="90"/>
-      <enum name="cw_180" value="180"/>
-      <enum name="cw_270" value="270"/>
+    <attr name="shimmer_direction" format="enum">
+      <enum name="left_to_right" value="0"/>
+      <enum name="top_to_bottom" value="1"/>
+      <enum name="right_to_left" value="2"/>
+      <enum name="bottom_to_top" value="3"/>
     </attr>
     <attr name="shimmer_dropoff" format="float"/>
     <attr name="shimmer_fixed_width" format="dimension"/>
     <attr name="shimmer_fixed_height" format="dimension"/>
     <attr name="shimmer_intensity" format="float"/>
-    <attr name="shimmer_relative_width" format="float"/>
-    <attr name="shimmer_relative_height" format="float"/>
+    <attr name="shimmer_width_ratio" format="float"/>
+    <attr name="shimmer_height_ratio" format="float"/>
     <attr name="shimmer_shape" format="enum">
       <enum name="linear" value="0"/>
       <enum name="radial" value="1"/>
