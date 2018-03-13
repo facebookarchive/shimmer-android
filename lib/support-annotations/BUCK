@@ -1,0 +1,25 @@
+# Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the LICENSE file in the root
+# directory of this source tree. An additional grant of patent rights can be found in the PATENTS
+# file in the same directory.
+
+android_library(
+    name = "support-annotations",
+    exported_deps = [
+        ":support-annotations-prebuilt",
+    ],
+    visibility = ["PUBLIC"],
+)
+
+android_prebuilt_aar(
+    name = "support-annotations-prebuilt",
+    aar = ":support-annotations.aar",
+    visibility = ["PUBLIC"],
+)
+
+remote_file(
+    name = "support-annotations.aar",
+    sha1 = "39ded76b5e1ce1c5b2688e1d25cdc20ecee32007",
+    url = "mvn:com.android.support:support-annotations:aar:27.1.0",
+)

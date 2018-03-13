@@ -1,0 +1,24 @@
+# Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the LICENSE file in the root
+# directory of this source tree. An additional grant of patent rights can be found in the PATENTS
+# file in the same directory.
+
+load("//:SHIMMER_DEFS", "SHIMMER_SUPPORT_ANNOTATIONS")
+
+android_library(
+    name = "shimmer",
+    srcs = glob(["src/main/java/**/*.java"]),
+    required_for_source_only_abi = True,
+    visibility = ["PUBLIC"],
+    deps = [
+        ":res",
+        SHIMMER_SUPPORT_ANNOTATIONS,
+    ],
+)
+
+android_resource(
+    name = "res",
+    package = "com.facebook.shimmer",
+    res = "src/main/res",
+)
