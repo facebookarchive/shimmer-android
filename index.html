@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Shimmer effect for Android</title>
+  <title>Shimmer for Android</title>
   <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Roboto:400,300,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/syntax.css" type="text/css" media="screen" charset="utf-8">
   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen" charset="utf-8">
@@ -21,9 +21,9 @@
     <div class="section_title">About</div>
     <p>
     <a href="http://github.com/facebook/shimmer-android" target="_blank">Shimmer</a>
-    is a java library that provides an easy way to add a shimmer effect
+    is an Android library that provides an easy way to add a shimmer effect
     to any view in your Android app. It is useful as an unobtrusive loading
-    indicator. It was originally developed for
+    indicator that was originally developed for
     <a href="https://facebook.com/home" target="_blank">Facebook Home</a>.
     </p>
     <p>
@@ -105,7 +105,7 @@ cd $SHIMMER_CHECKOUT
     {% highlight java %}
 ShimmerFrameLayout container = 
   (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
-container.startShimmerAnimation();
+container.startShimmer();
     {% endhighlight %}
     </div>
 
@@ -117,19 +117,24 @@ container.startShimmerAnimation();
     check out the <a href="javadoc/index.html" target="_blank">API reference</a>
     </p>
     <dl>
+        <dt>Clip to Children</dt><dd>Whether to clip the shimmering effect to the children, or to opaquely draw the shimmer on top of the children. Use this if your overall layout contains transparency.</dd>
+        <dt>Colored</dt><dd>Whether you want the shimmer to affect just the alpha or draw colors on-top of the children.</dd>
+        <dt>Base Color</dt><dd>If colored is specified, the base color of the content.</dd>
+        <dt>Highlight Color</dt><dd>If colored is specified, the shimmer's highlight color.</dd>
+        <dt>Base Alpha</dt>If colored is not specified, the alpha used to render the base view i.e. the unhighlighted view over which the highlight is drawn.<dd></dd>
+        <dt>Highlight Alpha</dt><dd>If colored is not specified, the alpha of the shimmer highlight.</dd>
         <dt>Auto Start</dt><dd>Whether to automatically start the animation when the view is shown, or not.</dd>
-        <dt>Base Alpha</dt><dd>Alpha used to render the base view i.e. the unhighlighted view over which the highlight is drawn.</dd>
         <dt>Duration</dt><dd>Time it takes for the highlight to move from one end of the layout to the other.</dd>
         <dt>Repeat Count</dt><dd>Number of times of the current animation will repeat.</dd>
         <dt>Repeat Delay</dt><dd>Delay after which the current animation will repeat.</dd>
         <dt>Repeat Mode</dt><dd>What the animation should do after reaching the end, either restart from the beginning or reverse back towards it.</dd>
-        <dt>Mask Shape</dt><dd>Shape of the highlight mask, either with a linear or a circular gradient.</dd>
-        <dt>Angle</dt><dd>Angle at which the highlight mask is animated, from left-to-right, top-to-bottom etc.</dd>
+        <dt>Direction</dt><dd>The travel direction of the shimmer highlight: left to right, top to bottom, right to left or bottom to top.</dd>
         <dt>Dropoff</dt><dd>Controls the size of the fading edge of the highlight.</dd>
         <dt>Intensity</dt><dd>Controls the brightness of the highlight at the center</dd>
+        <dt>Shape</dt><dd>Shape of the highlight mask, either with a linear or a circular gradient.</dd>
         <dt>Tilt</dt><dd>Angle at which the highlight is <i>tilted</i>, measured in degrees</dd>
         <dt>Fixed Width, Height</dt><dd>Fixed sized highlight mask, if set, overrides the relative size value</dd>
-        <dt>Relative Width, Height</dt><dd>Size of the highlight mask, relative to the layout it is applied to.</dd>
+        <dt>Width, Height ratio</dt><dd>Size of the highlight mask, relative to the layout it is applied to.</dd>
     </dl>
     <div class="section_title">Support</div>
     <p>
