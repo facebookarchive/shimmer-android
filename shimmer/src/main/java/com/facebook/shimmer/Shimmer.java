@@ -13,6 +13,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
+import android.support.annotation.FloatRange;
 import android.support.annotation.IntDef;
 import android.support.annotation.Px;
 import android.util.AttributeSet;
@@ -320,16 +321,16 @@ public class Shimmer {
      * Sets the base alpha, which is the alpha of the underlying children, amount in the range [0,
      * 1].
      */
-    public T setBaseAlpha(float alpha) {
+    public T setBaseAlpha(@FloatRange(from = 0, to = 1) float alpha) {
       int intAlpha = (int) (clamp(0f, 1f, alpha) * 255f);
       mShimmer.baseColor = intAlpha << 24 | (mShimmer.baseColor & 0x00FFFFFF);
       return getThis();
     }
 
     /** Sets the shimmer alpha amount in the range [0, 1]. */
-    public T setHighlightAlpha(float alpha) {
+    public T setHighlightAlpha(@FloatRange(from = 0, to = 1) float alpha) {
       int intAlpha = (int) (clamp(0f, 1f, alpha) * 255f);
-      mShimmer.baseColor = intAlpha << 24 | (mShimmer.baseColor & 0x00FFFFFF);
+      mShimmer.highlightColor = intAlpha << 24 | (mShimmer.highlightColor & 0x00FFFFFF);
       return getThis();
     }
 
