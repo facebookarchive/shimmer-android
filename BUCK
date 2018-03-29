@@ -4,7 +4,7 @@
 # directory of this source tree. An additional grant of patent rights can be found in the PATENTS
 # file in the same directory.
 
-load("//:SHIMMER_DEFS", "SHIMMER_ROOT", "SHIMMER_TARGET")
+load("//:SHIMMER_DEFS", "SHIMMER_TARGET")
 
 android_library(
     name = "shimmer",
