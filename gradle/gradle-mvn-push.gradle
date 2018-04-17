@@ -22,11 +22,11 @@ def isReleaseBuild() {
 }
 
 def getRepositoryUsername() {
-  return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+  return hasProperty('repositoryUsername') ? property('repositoryUsername') : ""
 }
 
 def getRepositoryPassword() {
-  return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+  return hasProperty('repositoryPassword') ? property('repositoryPassword') : ""
 }
 
 def configurePom(pom) {
