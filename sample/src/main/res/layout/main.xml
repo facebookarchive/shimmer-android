@@ -58,7 +58,8 @@
       android:layout_marginEnd="10dp"
       android:layout_marginRight="10dp"
       android:text="@string/presets"
-      android:textAllCaps="true"/>
+      android:textAllCaps="true"
+      />
 
     <Button
       android:id="@+id/preset_button0"
