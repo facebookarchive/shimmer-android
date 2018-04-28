@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shimmer</string>
-  <string name="mission_text">Facebook’s mission is to give people the power to build community
+    <string name="mission_text">Facebook’s mission is to give people the power to build community
       and bring the world closer together.</string>
-  <string name="presets">Presets</string>
-  <string name="_1">1</string>
-  <string name="_2">2</string>
-  <string name="_3">3</string>
-  <string name="_4">4</string>
-  <string name="_5">5</string>
-  <string name="facebook_logo">Facebook Logo</string>
+    <string name="presets">Presets</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="facebook_logo">Facebook Logo</string>
 </resources>
