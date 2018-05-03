@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shimmer</string>
+    <string name="mission_statement">Facebook’s mission is to give people the power to build community and bring the world closer together.</string>
+    <string name="presets">Presets</string>
 </resources>
