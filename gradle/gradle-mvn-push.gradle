@@ -22,11 +22,11 @@ def isReleaseBuild() {
 }
 
 def getRepositoryUsername() {
-  return hasProperty('repositoryUsername') ? property('repositoryUsername') : ""
+  return findProperty('repositoryUsername') ? property('repositoryUsername') : ""
 }
 
 def getRepositoryPassword() {
-  return hasProperty('repositoryPassword') ? property('repositoryPassword') : ""
+  return findProperty('repositoryPassword') ? property('repositoryPassword') : ""
 }
 
 def configurePom(pom) {
