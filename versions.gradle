@@ -4,7 +4,7 @@ ext {
       compileSdk    : 26,
       minSdk        : 14,
       buildTools    : '26.0.2',
-      kotlin        : '1.2.21',
+      kotlin        : '1.2.41',
       supportLibrary: '27.0.2',
   ]
 
