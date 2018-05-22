@@ -113,14 +113,14 @@ public class ShimmerFrameLayout extends FrameLayout {
 
   /** Starts the shimmer animation. */
   public void startShimmer() {
-    if (mValueAnimator != null && !mValueAnimator.isStarted()) {
+    if (mValueAnimator != null && !isShimmerStarted()) {
       mValueAnimator.start();
     }
   }
 
   /** Stops the shimmer animation. */
   public void stopShimmer() {
-    if (mValueAnimator != null && mValueAnimator.isStarted()) {
+    if (mValueAnimator != null && isShimmerStarted()) {
       mValueAnimator.cancel();
     }
   }
