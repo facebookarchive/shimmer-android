@@ -7,11 +7,11 @@ load("//:SHIMMER_DEFS", "SHIMMER_TARGET", "fb_core_android_library")
 
 fb_core_android_library(
     name = "shimmer",
-    exported_deps = [
-        SHIMMER_TARGET,
-    ],
     visibility = ["PUBLIC"],
     deps = [
+        SHIMMER_TARGET,
+    ],
+    exported_deps = [
         SHIMMER_TARGET,
     ],
 )

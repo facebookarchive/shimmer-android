@@ -7,10 +7,10 @@ load("//:SHIMMER_DEFS", "fb_core_android_library")
 
 fb_core_android_library(
     name = "support-annotations",
+    visibility = ["PUBLIC"],
     exported_deps = [
         ":support-annotations-prebuilt",
     ],
-    visibility = ["PUBLIC"],
 )
 
 android_prebuilt_aar(
