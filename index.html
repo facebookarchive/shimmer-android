@@ -31,7 +31,7 @@
     nest any view inside a <code>ShimmerFrameLayout</code> tag, and call to start
     the animation from your code. That's all that is required. The layout will use the
     values you specify either on the tag (using custom attributes) or programmatically
-    in your code, and generate an animation on the fly. See the 
+    in your code, and generate an animation on the fly. See the
     <a href="javadoc/index.html" target="_blank">API reference</a> for further details.
     </p>
     <p>
@@ -47,7 +47,7 @@
     {% highlight groovy %}
 // Gradle dependency on Shimmer for Android
 dependencies {
-  compile 'com.facebook.shimmer:shimmer:0.2.0'
+  implementation 'com.facebook.shimmer:shimmer:0.2.0'
 }
     {% endhighlight %}
     </div>
@@ -72,13 +72,11 @@ dependencies {
     </p>
     <div class="code">
     {% highlight bash %}
-cd $SHIMMER_CHECKOUT
+# Install the latest code to your local repository
+./gradlew shimmer:installArchives
 
-# install the Shimmer sample app
-./gradlew installExample
-
-# build the Android distribution Jar
-./gradlew shimmerDistJar
+# Install the sample app
+./gradlew sample:installDebug
     {% endhighlight %}
     </div>
     <div class="section_title">Usage</div>
@@ -99,7 +97,7 @@ cd $SHIMMER_CHECKOUT
     <p>In your code, you can then start the animation:</p>
     <div class="code">
     {% highlight java %}
-ShimmerFrameLayout container = 
+ShimmerFrameLayout container =
   (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
 container.startShimmer();
     {% endhighlight %}
