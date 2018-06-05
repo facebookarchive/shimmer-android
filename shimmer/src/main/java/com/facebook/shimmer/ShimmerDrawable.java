@@ -37,7 +37,7 @@ public final class ShimmerDrawable extends Drawable {
 
   private @Nullable ValueAnimator mValueAnimator;
 
-  private Shimmer mShimmer;
+  private @Nullable Shimmer mShimmer;
 
   public ShimmerDrawable() {
     mShimmerPaint.setAntiAlias(true);
@@ -87,6 +87,10 @@ public final class ShimmerDrawable extends Drawable {
 
   @Override
   public void draw(@NonNull Canvas canvas) {
+    if (mShimmer == null) {
+      return;
+    }
+
     final Rect bounds = getBounds();
     final float width = bounds.width();
     final float height = bounds.height();
@@ -132,7 +136,7 @@ public final class ShimmerDrawable extends Drawable {
 
   @Override
   public int getOpacity() {
-    return (mShimmer.clipToChildren || mShimmer.alphaShimmer)
+    return mShimmer != null && (mShimmer.clipToChildren || mShimmer.alphaShimmer)
         ? PixelFormat.TRANSLUCENT
         : PixelFormat.OPAQUE;
   }
@@ -142,6 +146,10 @@ public final class ShimmerDrawable extends Drawable {
   }
 
   private void updateValueAnimator() {
+    if (mShimmer == null) {
+      return;
+    }
+
     final boolean started;
     if (mValueAnimator != null) {
       started = mValueAnimator.isStarted();
@@ -165,6 +173,7 @@ public final class ShimmerDrawable extends Drawable {
   void maybeStartShimmer() {
     if (mValueAnimator != null
         && !mValueAnimator.isStarted()
+        && mShimmer != null
         && mShimmer.autoStart
         && getCallback() != null) {
       mValueAnimator.start();
@@ -175,7 +184,7 @@ public final class ShimmerDrawable extends Drawable {
     final Rect bounds = getBounds();
     final int boundsWidth = bounds.width();
     final int boundsHeight = bounds.height();
-    if (boundsWidth == 0 || boundsHeight == 0) {
+    if (boundsWidth == 0 || boundsHeight == 0 || mShimmer == null) {
       return;
     }
     final int width = mShimmer.width(boundsWidth);
