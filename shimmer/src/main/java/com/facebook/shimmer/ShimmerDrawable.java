@@ -118,8 +118,8 @@ public final class ShimmerDrawable extends Drawable {
     }
 
     final int saveCount = canvas.save();
-    canvas.translate(dx, dy);
     canvas.rotate(mShimmer.tilt, width / 2f, height / 2f);
+    canvas.translate(dx, dy);
     canvas.drawRect(mDrawRect, mShimmerPaint);
     canvas.restoreToCount(saveCount);
   }
