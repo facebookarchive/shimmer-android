@@ -11,13 +11,13 @@ import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -33,7 +33,8 @@ public final class ShimmerDrawable extends Drawable {
       };
 
   private final Paint mShimmerPaint = new Paint();
-  private final RectF mDrawRect = new RectF();
+  private final Rect mDrawRect = new Rect();
+  private final Matrix mShaderMatrix = new Matrix();
 
   private @Nullable ValueAnimator mValueAnimator;
 
@@ -80,7 +81,7 @@ public final class ShimmerDrawable extends Drawable {
     super.onBoundsChange(bounds);
     final int width = bounds.width();
     final int height = bounds.height();
-    mDrawRect.set(2 * -width, 2 * -height, 4 * width, 4 * height);
+    mDrawRect.set(0, 0, width, height);
     updateShader();
     maybeStartShimmer();
   }
@@ -91,37 +92,37 @@ public final class ShimmerDrawable extends Drawable {
       return;
     }
 
-    final Rect bounds = getBounds();
-    final float width = bounds.width();
-    final float height = bounds.height();
+    final float tiltTan = (float) Math.tan(Math.toRadians(mShimmer.tilt));
+    final float translateHeight = mDrawRect.height() + tiltTan * mDrawRect.width();
+    final float translateWidth = mDrawRect.width() + tiltTan * mDrawRect.height();
     final float dx;
     final float dy;
     final float animatedValue = mValueAnimator != null ? mValueAnimator.getAnimatedFraction() : 0f;
     switch (mShimmer.direction) {
       default:
       case Shimmer.Direction.LEFT_TO_RIGHT:
-        dx = offset(-width, width, animatedValue);
+        dx = offset(-translateWidth, translateWidth, animatedValue);
         dy = 0;
         break;
       case Shimmer.Direction.RIGHT_TO_LEFT:
-        dx = offset(width, -width, animatedValue);
+        dx = offset(translateWidth, -translateWidth, animatedValue);
         dy = 0f;
         break;
       case Shimmer.Direction.TOP_TO_BOTTOM:
         dx = 0f;
-        dy = offset(-height, height, animatedValue);
+        dy = offset(-translateHeight, translateHeight, animatedValue);
         break;
       case Shimmer.Direction.BOTTOM_TO_TOP:
         dx = 0f;
-        dy = offset(height, -height, animatedValue);
+        dy = offset(translateHeight, -translateHeight, animatedValue);
         break;
     }
 
-    final int saveCount = canvas.save();
-    canvas.rotate(mShimmer.tilt, width / 2f, height / 2f);
-    canvas.translate(dx, dy);
+    mShaderMatrix.reset();
+    mShaderMatrix.setRotate(mShimmer.tilt, mDrawRect.width() / 2f, mDrawRect.height() / 2f);
+    mShaderMatrix.postTranslate(dx, dy);
+    mShimmerPaint.getShader().setLocalMatrix(mShaderMatrix);
     canvas.drawRect(mDrawRect, mShimmerPaint);
-    canvas.restoreToCount(saveCount);
   }
 
   @Override
