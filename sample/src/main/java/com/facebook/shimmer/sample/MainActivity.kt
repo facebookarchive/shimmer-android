@@ -87,7 +87,7 @@ class MainActivity : Activity(), View.OnClickListener {
           3 -> {
             // Sweep angle 90
             toast = Toast.makeText(this, "Sweep angle 90", Toast.LENGTH_SHORT)
-            shimmerBuilder.setDirection(Shimmer.Direction.TOP_TO_BOTTOM)
+            shimmerBuilder.setDirection(Shimmer.Direction.TOP_TO_BOTTOM).setTilt(0f)
 
           }
           4 -> {
