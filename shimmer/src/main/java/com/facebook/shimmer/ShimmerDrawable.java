@@ -88,7 +88,7 @@ public final class ShimmerDrawable extends Drawable {
 
   @Override
   public void draw(@NonNull Canvas canvas) {
-    if (mShimmer == null) {
+    if (mShimmer == null || mShimmerPaint.getShader() == null) {
       return;
     }
 
