@@ -94,12 +94,12 @@ dependencies {
 </com.facebook.shimmer.ShimmerFrameLayout>
     {% endhighlight %}
     </div>
-    <p>In your code, you can then start the animation:</p>
+    <p>And thats it! If you specify `auto-start` to be false, then you can start the animation in code:</p>
     <div class="code">
     {% highlight java %}
 ShimmerFrameLayout container =
   (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
-container.startShimmer();
+container.startShimmer(); // If auto-start is set to false
     {% endhighlight %}
     </div>
 
