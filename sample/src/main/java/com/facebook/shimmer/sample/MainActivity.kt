@@ -37,7 +37,8 @@ class MainActivity : Activity(), View.OnClickListener {
         preset_button1,
         preset_button2,
         preset_button3,
-        preset_button4
+        preset_button4,
+        preset_button5
     )
     presetButtons.forEach { it.setOnClickListener(this@MainActivity) }
     selectPreset(0, false)
@@ -99,11 +100,16 @@ class MainActivity : Activity(), View.OnClickListener {
                 .setIntensity(0.35f)
                 .setShape(Shimmer.Shape.RADIAL)
           }
+          5 -> {
+            // Off
+            toast = Toast.makeText(this, "Off", Toast.LENGTH_SHORT)
+            null
+          }
           else -> {
             toast = Toast.makeText(this, "Default", Toast.LENGTH_SHORT)
             shimmerBuilder
           }
-        }.build()
+        }?.build()
     )
 
     // Show toast describing the chosen preset, if necessary

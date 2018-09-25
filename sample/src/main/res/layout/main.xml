@@ -88,5 +88,12 @@
         android:gravity="center"
         style="@style/thin.white.small.button"
         />
+
+    <Button
+        android:id="@+id/preset_button5"
+        android:text="Off"
+        android:gravity="center"
+        style="@style/thin.white.small.button"
+        />
   </LinearLayout>
 </FrameLayout>
