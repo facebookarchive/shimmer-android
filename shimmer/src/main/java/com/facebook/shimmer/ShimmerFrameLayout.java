@@ -74,13 +74,9 @@ public class ShimmerFrameLayout extends FrameLayout {
     }
   }
 
-  public ShimmerFrameLayout setShimmer(Shimmer shimmer) {
-    if (shimmer == null) {
-      throw new IllegalArgumentException("Given null shimmer");
-    }
-
+  public ShimmerFrameLayout setShimmer(@Nullable Shimmer shimmer) {
     mShimmerDrawable.setShimmer(shimmer);
-    if (shimmer.clipToChildren) {
+    if (shimmer != null && shimmer.clipToChildren) {
       setLayerType(LAYER_TYPE_HARDWARE, mContentPaint);
     } else {
       setLayerType(LAYER_TYPE_NONE, null);

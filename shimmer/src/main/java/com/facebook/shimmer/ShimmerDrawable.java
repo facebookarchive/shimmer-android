@@ -44,14 +44,13 @@ public final class ShimmerDrawable extends Drawable {
     mShimmerPaint.setAntiAlias(true);
   }
 
-  public void setShimmer(Shimmer shimmer) {
-    if (shimmer == null) {
-      throw new IllegalArgumentException("Given null shimmer");
-    }
+  public void setShimmer(@Nullable Shimmer shimmer) {
     mShimmer = shimmer;
-    mShimmerPaint.setXfermode(
-        new PorterDuffXfermode(
-            mShimmer.alphaShimmer ? PorterDuff.Mode.DST_IN : PorterDuff.Mode.SRC_IN));
+    if (mShimmer != null) {
+      mShimmerPaint.setXfermode(
+          new PorterDuffXfermode(
+              mShimmer.alphaShimmer ? PorterDuff.Mode.DST_IN : PorterDuff.Mode.SRC_IN));
+    }
     updateShader();
     updateValueAnimator();
     invalidateSelf();
