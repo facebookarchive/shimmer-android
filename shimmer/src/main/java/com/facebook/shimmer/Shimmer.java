@@ -243,6 +243,28 @@ public class Shimmer {
       return getThis();
     }
 
+    /** Copies the configuration of an already built Shimmer to this builder */
+    public T copyFrom(Shimmer other) {
+      setDirection(other.direction);
+      setShape(other.shape);
+      setFixedWidth(other.fixedWidth);
+      setFixedHeight(other.fixedHeight);
+      setWidthRatio(other.widthRatio);
+      setHeightRatio(other.heightRatio);
+      setIntensity(other.intensity);
+      setDropoff(other.dropoff);
+      setTilt(other.tilt);
+      setClipToChildren(other.clipToChildren);
+      setAutoStart(other.autoStart);
+      setRepeatCount(other.repeatCount);
+      setRepeatMode(other.repeatMode);
+      setRepeatDelay(other.repeatDelay);
+      setDuration(other.animationDuration);
+      mShimmer.baseColor = other.baseColor;
+      mShimmer.highlightColor = other.highlightColor;
+      return getThis();
+    }
+
     /** Sets the direction of the shimmer's sweep. See {@link Direction}. */
     public T setDirection(@Direction int direction) {
       mShimmer.direction = direction;
