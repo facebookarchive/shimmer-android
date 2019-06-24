@@ -20,8 +20,8 @@ import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public final class ShimmerDrawable extends Drawable {
   private final ValueAnimator.AnimatorUpdateListener mUpdateListener =
