@@ -30,6 +30,8 @@ public class ShimmerFrameLayout extends FrameLayout {
   private final Paint mContentPaint = new Paint();
   private final ShimmerDrawable mShimmerDrawable = new ShimmerDrawable();
 
+  private boolean mShowShimmer = true;
+
   public ShimmerFrameLayout(Context context) {
     super(context);
     init(context, null);
@@ -100,6 +102,36 @@ public class ShimmerFrameLayout extends FrameLayout {
     return mShimmerDrawable.isShimmerStarted();
   }
 
+  /**
+   * Sets the ShimmerDrawable to be visible.
+   * @param startShimmer Whether to start the shimmer again.
+   */
+  public void showShimmer(boolean startShimmer) {
+    if (mShowShimmer) {
+      return;
+    }
+    mShowShimmer = true;
+    if (startShimmer) {
+      startShimmer();
+    }
+  }
+
+  /** Sets the ShimmerDrawable to be invisible, stopping it in the process. */
+  public void hideShimmer() {
+    if (!mShowShimmer) {
+      return;
+    }
+
+    stopShimmer();
+    mShowShimmer = false;
+    invalidate();
+  }
+
+  /** Return whether the shimmer drawable is visible. */
+  public boolean isShimmerVisible() {
+    return mShowShimmer;
+  }
+
   @Override
   public void onLayout(boolean changed, int left, int top, int right, int bottom) {
     super.onLayout(changed, left, top, right, bottom);
@@ -123,7 +155,9 @@ public class ShimmerFrameLayout extends FrameLayout {
   @Override
   public void dispatchDraw(Canvas canvas) {
     super.dispatchDraw(canvas);
-    mShimmerDrawable.draw(canvas);
+    if (mShowShimmer) {
+      mShimmerDrawable.draw(canvas);
+    }
   }
 
   @Override
