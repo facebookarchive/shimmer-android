@@ -30,7 +30,7 @@ public class ShimmerFrameLayout extends FrameLayout {
   private final Paint mContentPaint = new Paint();
   private final ShimmerDrawable mShimmerDrawable = new ShimmerDrawable();
 
-  private Boolean mShowShimmer = true;
+  private boolean mShowShimmer = true;
 
   public ShimmerFrameLayout(Context context) {
     super(context);
