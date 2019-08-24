@@ -104,6 +104,7 @@ public class ShimmerFrameLayout extends FrameLayout {
 
   /**
    * Sets the ShimmerDrawable to be visible.
+   *
    * @param startShimmer Whether to start the shimmer again.
    */
   public void showShimmer(boolean startShimmer) {
