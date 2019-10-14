@@ -108,21 +108,15 @@ public class ShimmerFrameLayout extends FrameLayout {
    * @param startShimmer Whether to start the shimmer again.
    */
   public void showShimmer(boolean startShimmer) {
-    if (mShowShimmer) {
-      return;
-    }
     mShowShimmer = true;
     if (startShimmer) {
       startShimmer();
     }
+    invalidate();
   }
 
   /** Sets the ShimmerDrawable to be invisible, stopping it in the process. */
   public void hideShimmer() {
-    if (!mShowShimmer) {
-      return;
-    }
-
     stopShimmer();
     mShowShimmer = false;
     invalidate();
