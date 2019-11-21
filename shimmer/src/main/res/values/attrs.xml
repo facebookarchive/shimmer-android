@@ -15,6 +15,7 @@
       <enum name="restart" value="1"/>
       <enum name="reverse" value="2"/>
     </attr>
+    <attr name="shimmer_start_delay" format="integer"/>
     <attr name="shimmer_direction" format="enum">
       <enum name="left_to_right" value="0"/>
       <enum name="top_to_bottom" value="1"/>
