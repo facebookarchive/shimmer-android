@@ -88,6 +88,10 @@ public class ShimmerFrameLayout extends FrameLayout {
     return this;
   }
 
+  public @Nullable Shimmer getShimmer() {
+    return mShimmerDrawable.getShimmer();
+  }
+
   /** Starts the shimmer animation. */
   public void startShimmer() {
     mShimmerDrawable.startShimmer();

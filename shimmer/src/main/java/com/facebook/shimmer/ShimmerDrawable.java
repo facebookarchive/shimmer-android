@@ -57,6 +57,10 @@ public final class ShimmerDrawable extends Drawable {
     invalidateSelf();
   }
 
+  public @Nullable Shimmer getShimmer() {
+    return mShimmer;
+  }
+
   /** Starts the shimmer animation. */
   public void startShimmer() {
     if (mValueAnimator != null && !isShimmerStarted() && getCallback() != null) {
