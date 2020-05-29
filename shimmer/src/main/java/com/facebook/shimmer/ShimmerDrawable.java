@@ -8,6 +8,7 @@
 
 package com.facebook.shimmer;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -63,7 +64,15 @@ public final class ShimmerDrawable extends Drawable {
 
   /** Starts the shimmer animation. */
   public void startShimmer() {
+    startShimmer(null);
+  }
+
+  /** Starts the shimmer animation with animation listener. */
+  public void startShimmer(Animator.AnimatorListener listener) {
     if (mValueAnimator != null && !isShimmerStarted() && getCallback() != null) {
+      if (listener != null) {
+        mValueAnimator.addListener(listener);
+      }
       mValueAnimator.start();
     }
   }
