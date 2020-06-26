@@ -16,6 +16,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -138,6 +139,17 @@ public class ShimmerFrameLayout extends FrameLayout {
     final int width = getWidth();
     final int height = getHeight();
     mShimmerDrawable.setBounds(0, 0, width, height);
+  }
+
+  @Override
+  public void setVisibility(int visibility) {
+    super.setVisibility(visibility);
+    if (visibility == View.VISIBLE) {
+      mShimmerDrawable.maybeStartShimmer();
+    } else {
+      // GONE or INVISIBLE
+      stopShimmer();
+    }
   }
 
   @Override
