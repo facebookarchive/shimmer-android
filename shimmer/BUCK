@@ -17,4 +17,5 @@ fb_native.android_resource(
     name = "res",
     package = "com.facebook.shimmer",
     res = "src/main/res",
+    visibility = ["PUBLIC"],
 )
