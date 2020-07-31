@@ -83,9 +83,7 @@ public final class ShimmerDrawable extends Drawable {
   @Override
   public void onBoundsChange(Rect bounds) {
     super.onBoundsChange(bounds);
-    final int width = bounds.width();
-    final int height = bounds.height();
-    mDrawRect.set(0, 0, width, height);
+    mDrawRect.set(bounds);
     updateShader();
     maybeStartShimmer();
   }
