@@ -8,22 +8,23 @@
 
 ext {
   versions = [
-      targetSdk     : 28,
-      compileSdk    : 28,
-      minSdk        : 14,
-      buildTools    : '28.0.3',
-      kotlin        : '1.3.10',
+      targetSdk          : 28,
+      compileSdk         : 28,
+      minSdk             : 14,
+      buildTools         : '28.0.3',
+      kotlin             : '1.4.10',
+      androidGradlePlugin: '4.1.0',
       androidXAnnotations: '1.0.1',
   ]
 
   plugs = [
-      "agp"   : "com.android.tools.build:gradle:3.2.1",
+      "agp"   : "com.android.tools.build:gradle:${versions.androidGradlePlugin}",
       "kotlin": "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
   ]
 
   deps = [
-      shimmer             : "com.facebook.shimmer:shimmer:$VERSION_NAME",
-      kotlinStdlib        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
-      androidXAnnotations : "androidx.annotation:annotation:${versions.androidXAnnotations}",
+      shimmer            : "com.facebook.shimmer:shimmer:$VERSION_NAME",
+      kotlinStdlib       : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+      androidXAnnotations: "androidx.annotation:annotation:${versions.androidXAnnotations}",
   ]
 }

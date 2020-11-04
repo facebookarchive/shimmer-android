@@ -9,18 +9,24 @@
 buildscript {
   apply from: rootProject.file('versions.gradle')
   repositories {
+    mavenLocal()
     jcenter()
     google()
   }
-
   dependencies {
     classpath plugs.agp
+    classpath plugs.kotlin
   }
 }
 
 allprojects {
   repositories {
+    mavenLocal()
     jcenter()
     google()
   }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
 }
