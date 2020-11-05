@@ -33,6 +33,7 @@ public class ShimmerFrameLayout extends FrameLayout {
   private final ShimmerDrawable mShimmerDrawable = new ShimmerDrawable();
 
   private boolean mShowShimmer = true;
+  private boolean mStoppedShimmerBecauseVisibility = false;
 
   public ShimmerFrameLayout(Context context) {
     super(context);
@@ -100,6 +101,7 @@ public class ShimmerFrameLayout extends FrameLayout {
 
   /** Stops the shimmer animation. */
   public void stopShimmer() {
+    mStoppedShimmerBecauseVisibility = false;
     mShimmerDrawable.stopShimmer();
   }
 
@@ -142,13 +144,17 @@ public class ShimmerFrameLayout extends FrameLayout {
   }
 
   @Override
-  public void setVisibility(int visibility) {
-    super.setVisibility(visibility);
-    if (visibility == View.VISIBLE) {
-      mShimmerDrawable.maybeStartShimmer();
-    } else {
+  protected void onVisibilityChanged(View changedView, int visibility) {
+    super.onVisibilityChanged(changedView, visibility);
+    if (visibility != View.VISIBLE) {
       // GONE or INVISIBLE
-      stopShimmer();
+      if (isShimmerStarted()) {
+        stopShimmer();
+        mStoppedShimmerBecauseVisibility = true;
+      }
+    } else if (mStoppedShimmerBecauseVisibility) {
+      mShimmerDrawable.maybeStartShimmer();
+      mStoppedShimmerBecauseVisibility = false;
     }
   }
 
