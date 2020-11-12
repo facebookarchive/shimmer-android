@@ -28,14 +28,14 @@ class MainActivity : Activity(), View.OnClickListener {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main)
     shimmerViewContainer = shimmer_view_container
-    presetButtons = arrayOf(
-        preset_button0,
-        preset_button1,
-        preset_button2,
-        preset_button3,
-        preset_button4,
-        preset_button5
-    )
+    presetButtons =
+        arrayOf(
+            preset_button0,
+            preset_button1,
+            preset_button2,
+            preset_button3,
+            preset_button4,
+            preset_button5)
     presetButtons.forEach { it.setOnClickListener(this@MainActivity) }
     selectPreset(0, false)
   }
@@ -85,12 +85,12 @@ class MainActivity : Activity(), View.OnClickListener {
             // Sweep angle 90
             toast = Toast.makeText(this, "Sweep angle 90", Toast.LENGTH_SHORT)
             shimmerBuilder.setDirection(Shimmer.Direction.TOP_TO_BOTTOM).setTilt(0f)
-
           }
           4 -> {
             // Spotlight
             toast = Toast.makeText(this, "Spotlight", Toast.LENGTH_SHORT)
-            shimmerBuilder.setBaseAlpha(0f)
+            shimmerBuilder
+                .setBaseAlpha(0f)
                 .setDuration(2000L)
                 .setDropoff(0.1f)
                 .setIntensity(0.35f)
@@ -105,8 +105,7 @@ class MainActivity : Activity(), View.OnClickListener {
             toast = Toast.makeText(this, "Default", Toast.LENGTH_SHORT)
             shimmerBuilder
           }
-        }?.build()
-    )
+        }?.build())
 
     // Show toast describing the chosen preset, if necessary
     if (showToast) {
