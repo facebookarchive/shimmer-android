@@ -21,6 +21,7 @@ import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.view.animation.LinearInterpolator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -99,7 +100,8 @@ public final class ShimmerDrawable extends Drawable {
     final float translateWidth = mDrawRect.width() + tiltTan * mDrawRect.height();
     final float dx;
     final float dy;
-    final float animatedValue = mValueAnimator != null ? mValueAnimator.getAnimatedFraction() : 0f;
+    final float animatedValue =
+        mValueAnimator != null ? (float) mValueAnimator.getAnimatedValue() : 0f;
     switch (mShimmer.direction) {
       default:
       case Shimmer.Direction.LEFT_TO_RIGHT:
@@ -164,6 +166,7 @@ public final class ShimmerDrawable extends Drawable {
 
     mValueAnimator =
         ValueAnimator.ofFloat(0f, 1f + (float) (mShimmer.repeatDelay / mShimmer.animationDuration));
+    mValueAnimator.setInterpolator(new LinearInterpolator());
     mValueAnimator.setRepeatMode(mShimmer.repeatMode);
     mValueAnimator.setStartDelay(mShimmer.startDelay);
     mValueAnimator.setRepeatCount(mShimmer.repeatCount);
