@@ -14,6 +14,7 @@ ext {
       buildTools         : '28.0.3',
       kotlin             : '1.4.10',
       androidGradlePlugin: '4.1.0',
+      constraintLayout   : '2.0.4',
       androidXAnnotations: '1.0.1',
   ]
 
@@ -25,6 +26,7 @@ ext {
   deps = [
       shimmer            : "com.facebook.shimmer:shimmer:$VERSION_NAME",
       kotlinStdlib       : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+      constraintLayout   : "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}",
       androidXAnnotations: "androidx.annotation:annotation:${versions.androidXAnnotations}",
   ]
 }
