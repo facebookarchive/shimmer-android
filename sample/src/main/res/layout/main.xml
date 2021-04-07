@@ -1,99 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/background"
-    android:orientation="vertical"
-    android:padding="20dp">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/background"
+  android:padding="20dp">
 
   <com.facebook.shimmer.ShimmerFrameLayout
-      android:id="@+id/shimmer_view_container"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      app:shimmer_duration="1000">
+    android:id="@+id/shimmer_view_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.5"
+    app:shimmer_duration="1000">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="vertical">
 
       <ImageView
-          android:layout_width="64dp"
-          android:layout_height="64dp"
-          android:src="@drawable/fb_logo"/>
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/fb_logo" />
 
       <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="20dp"
-          android:gravity="center"
-          android:text="@string/mission_statement"
-          style="@style/thin.white.large"/>
+        style="@style/thin.white.large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/mission_statement" />
     </LinearLayout>
   </com.facebook.shimmer.ShimmerFrameLayout>
 
-  <LinearLayout
+  <TextView
+    android:id="@+id/preset"
+    style="@style/thin.white.small"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="20dp"
+    android:layout_marginRight="20dp"
+    android:text="@string/presets"
+    android:textAllCaps="true"
+    app:layout_constraintBottom_toBottomOf="@id/preset_scroll_view"
+    app:layout_constraintEnd_toStartOf="@id/preset_scroll_view"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@id/preset_scroll_view" />
+
+  <HorizontalScrollView
+    android:id="@+id/preset_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constrainedWidth="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/preset"
+    app:layout_constraintTop_toBottomOf="@id/shimmer_view_container">
+
+    <LinearLayout
       android:id="@+id/settings_container"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="bottom"
       android:gravity="center_vertical"
       android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:text="@string/presets"
-        android:textAllCaps="true"
-        style="@style/thin.white.small"
-        />
-
-    <Button
+      <Button
         android:id="@+id/preset_button0"
-        android:text="1"
-        android:gravity="center"
         style="@style/thin.white.small.button"
-        />
+        android:gravity="center"
+        android:text="1" />
 
-    <Button
+      <Button
         android:id="@+id/preset_button1"
-        android:text="2"
-        android:gravity="center"
         style="@style/thin.white.small.button"
-        />
+        android:gravity="center"
+        android:text="2" />
 
-    <Button
+      <Button
         android:id="@+id/preset_button2"
-        android:text="3"
-        android:gravity="center"
         style="@style/thin.white.small.button"
-        />
+        android:gravity="center"
+        android:text="3" />
 
-    <Button
+      <Button
         android:id="@+id/preset_button3"
-        android:text="4"
-        android:gravity="center"
         style="@style/thin.white.small.button"
-        />
+        android:gravity="center"
+        android:text="4" />
 
-    <Button
+      <Button
         android:id="@+id/preset_button4"
-        android:text="5"
-        android:gravity="center"
         style="@style/thin.white.small.button"
-        />
+        android:gravity="center"
+        android:text="5" />
 
-    <Button
+      <Button
         android:id="@+id/preset_button5"
-        android:text="Off"
-        android:gravity="center"
         style="@style/thin.white.small.button"
-        />
-  </LinearLayout>
-</FrameLayout>
+        android:gravity="center"
+        android:text="Off" />
+    </LinearLayout>
+  </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
