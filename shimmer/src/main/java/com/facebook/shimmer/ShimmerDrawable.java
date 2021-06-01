@@ -19,6 +19,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.view.animation.LinearInterpolator;
@@ -35,8 +36,9 @@ public final class ShimmerDrawable extends Drawable {
       };
 
   private final Paint mShimmerPaint = new Paint();
-  private final Rect mDrawRect = new Rect();
+  private final RectF mDrawRect = new RectF();
   private final Matrix mShaderMatrix = new Matrix();
+  private float mRadius = 0.0f;
 
   private @Nullable ValueAnimator mValueAnimator;
 
@@ -79,6 +81,16 @@ public final class ShimmerDrawable extends Drawable {
   /** Return whether the shimmer animation has been started. */
   public boolean isShimmerStarted() {
     return mValueAnimator != null && mValueAnimator.isStarted();
+  }
+
+  /** @param radius The radius in pixels of the corners of the rectangle shape */
+  public void setCornerRadius(float radius) {
+    mRadius = radius;
+    invalidateSelf();
+  }
+
+  public float getCornerRadius() {
+    return mRadius;
   }
 
   @Override
@@ -126,7 +138,7 @@ public final class ShimmerDrawable extends Drawable {
     mShaderMatrix.setRotate(mShimmer.tilt, mDrawRect.width() / 2f, mDrawRect.height() / 2f);
     mShaderMatrix.postTranslate(dx, dy);
     mShimmerPaint.getShader().setLocalMatrix(mShaderMatrix);
-    canvas.drawRect(mDrawRect, mShimmerPaint);
+    canvas.drawRoundRect(mDrawRect, mRadius, mRadius, mShimmerPaint);
   }
 
   @Override
