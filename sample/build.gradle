@@ -13,23 +13,14 @@ plugins {
 }
 
 android {
-  compileSdkVersion versions.compileSdk
+  compileSdk versions.compileSdk
 
   defaultConfig {
     applicationId 'com.facebook.shimmer.sample'
-    minSdkVersion versions.minSdk
-    targetSdkVersion versions.targetSdk
+    minSdk versions.minSdk
+    targetSdk versions.targetSdk
     versionCode 1
     versionName '1.0'
-  }
-
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
-  kotlinOptions {
-    jvmTarget = '1.8'
   }
 }
 

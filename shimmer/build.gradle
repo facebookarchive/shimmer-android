@@ -7,17 +7,23 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-  compileSdkVersion versions.compileSdk
+  compileSdk versions.compileSdk
 
   defaultConfig {
-    minSdkVersion versions.minSdk
+    minSdk versions.minSdk
   }
 }
 
 dependencies {
   implementation deps.androidXAnnotations
+  implementation "androidx.core:core-ktx:+"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+repositories {
+  mavenCentral()
+}
