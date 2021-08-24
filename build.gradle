@@ -7,6 +7,7 @@
  */
 
 buildscript {
+  ext.kotlin_version = '1.5.30'
   apply from: rootProject.file('versions.gradle')
   repositories {
     mavenLocal()
@@ -16,6 +17,7 @@ buildscript {
   dependencies {
     classpath plugs.agp
     classpath plugs.kotlin
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
