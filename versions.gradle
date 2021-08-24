@@ -12,7 +12,7 @@ ext {
       compileSdk         : 31,
       minSdk             : 14,
       kotlin             : '1.5.30',
-      androidGradlePlugin: '7.0.1',
+      androidGradlePlugin: '4.1.0',
       constraintLayout   : '2.0.4',
       androidXAnnotations: '1.0.1',
   ]
