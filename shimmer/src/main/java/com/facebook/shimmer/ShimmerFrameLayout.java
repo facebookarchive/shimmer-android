@@ -135,6 +135,10 @@ public class ShimmerFrameLayout extends FrameLayout {
     return mShowShimmer;
   }
 
+  public boolean isShimmerRunning() {
+    return mShimmerDrawable.isShimmerRunning();
+  }
+
   @Override
   public void onLayout(boolean changed, int left, int top, int right, int bottom) {
     super.onLayout(changed, left, top, right, bottom);
@@ -186,5 +190,13 @@ public class ShimmerFrameLayout extends FrameLayout {
   @Override
   protected boolean verifyDrawable(@NonNull Drawable who) {
     return super.verifyDrawable(who) || who == mShimmerDrawable;
+  }
+
+  public void setStaticAnimationProgress(float value) {
+    mShimmerDrawable.setStaticAnimationProgress(value);
+  }
+
+  public void clearStaticAnimationProgress() {
+    mShimmerDrawable.clearStaticAnimationProgress();
   }
 }

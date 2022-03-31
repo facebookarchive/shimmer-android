@@ -39,6 +39,7 @@ public final class ShimmerDrawable extends Drawable {
   private final Matrix mShaderMatrix = new Matrix();
 
   private @Nullable ValueAnimator mValueAnimator;
+  private float mStaticAnimationProgress = -1f;
 
   private @Nullable Shimmer mShimmer;
 
@@ -81,12 +82,30 @@ public final class ShimmerDrawable extends Drawable {
     return mValueAnimator != null && mValueAnimator.isStarted();
   }
 
+  /** Return whether the shimmer animation is running. */
+  public boolean isShimmerRunning() {
+    return mValueAnimator != null && mValueAnimator.isRunning();
+  }
+
   @Override
   public void onBoundsChange(Rect bounds) {
     super.onBoundsChange(bounds);
     mDrawRect.set(bounds);
     updateShader();
     maybeStartShimmer();
+  }
+
+  public void setStaticAnimationProgress(float value) {
+    if (Float.compare(value, mStaticAnimationProgress) == 0
+        || (value < 0f && mStaticAnimationProgress < 0f)) {
+      return;
+    }
+    mStaticAnimationProgress = Math.min(value, 1f);
+    invalidateSelf();
+  }
+
+  public void clearStaticAnimationProgress() {
+    setStaticAnimationProgress(-1f);
   }
 
   @Override
@@ -100,8 +119,14 @@ public final class ShimmerDrawable extends Drawable {
     final float translateWidth = mDrawRect.width() + tiltTan * mDrawRect.height();
     final float dx;
     final float dy;
-    final float animatedValue =
-        mValueAnimator != null ? (float) mValueAnimator.getAnimatedValue() : 0f;
+    final float animatedValue;
+
+    if (mStaticAnimationProgress < 0f) {
+      animatedValue = mValueAnimator != null ? (float) mValueAnimator.getAnimatedValue() : 0f;
+    } else {
+      animatedValue = mStaticAnimationProgress;
+    }
+
     switch (mShimmer.direction) {
       default:
       case Shimmer.Direction.LEFT_TO_RIGHT:
