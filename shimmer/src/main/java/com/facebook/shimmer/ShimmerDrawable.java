@@ -149,7 +149,7 @@ public final class ShimmerDrawable extends Drawable {
 
     mShaderMatrix.reset();
     mShaderMatrix.setRotate(mShimmer.tilt, mDrawRect.width() / 2f, mDrawRect.height() / 2f);
-    mShaderMatrix.postTranslate(dx, dy);
+    mShaderMatrix.preTranslate(dx, dy);
     mShimmerPaint.getShader().setLocalMatrix(mShaderMatrix);
     canvas.drawRect(mDrawRect, mShimmerPaint);
   }

@@ -104,6 +104,12 @@
         android:id="@+id/preset_button5"
         style="@style/thin.white.small.button"
         android:gravity="center"
+        android:text="6" />
+
+      <Button
+        android:id="@+id/preset_button6"
+        style="@style/thin.white.small.button"
+        android:gravity="center"
         android:text="Off" />
     </LinearLayout>
   </HorizontalScrollView>

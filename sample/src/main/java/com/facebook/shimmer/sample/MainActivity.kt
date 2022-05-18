@@ -35,7 +35,8 @@ class MainActivity : Activity(), View.OnClickListener {
             preset_button2,
             preset_button3,
             preset_button4,
-            preset_button5)
+            preset_button5,
+            preset_button6)
     presetButtons.forEach { it.setOnClickListener(this@MainActivity) }
     selectPreset(0, false)
   }
@@ -97,6 +98,17 @@ class MainActivity : Activity(), View.OnClickListener {
                 .setShape(Shimmer.Shape.RADIAL)
           }
           5 -> {
+            // Spotlight angle 45
+            toast = Toast.makeText(this, "Spotlight angle 45", Toast.LENGTH_SHORT)
+            shimmerBuilder
+                .setBaseAlpha(0f)
+                .setDuration(2000L)
+                .setDropoff(0.1f)
+                .setIntensity(0.35f)
+                .setTilt(45f)
+                .setShape(Shimmer.Shape.RADIAL)
+          }
+          6 -> {
             // Off
             toast = Toast.makeText(this, "Off", Toast.LENGTH_SHORT)
             null
