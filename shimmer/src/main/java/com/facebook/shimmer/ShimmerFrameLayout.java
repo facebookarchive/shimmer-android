@@ -8,6 +8,7 @@
 
 package com.facebook.shimmer;
 
+import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -96,7 +97,12 @@ public class ShimmerFrameLayout extends FrameLayout {
 
   /** Starts the shimmer animation. */
   public void startShimmer() {
-    mShimmerDrawable.startShimmer();
+    startShimmer(null);
+  }
+
+  /** Starts the shimmer animation with animation listener. */
+  public void startShimmer(Animator.AnimatorListener listener) {
+    mShimmerDrawable.startShimmer(listener);
   }
 
   /** Stops the shimmer animation. */
