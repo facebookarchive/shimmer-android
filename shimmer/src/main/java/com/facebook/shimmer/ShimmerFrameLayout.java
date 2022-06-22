@@ -96,7 +96,9 @@ public class ShimmerFrameLayout extends FrameLayout {
 
   /** Starts the shimmer animation. */
   public void startShimmer() {
-    mShimmerDrawable.startShimmer();
+    if (isAttachedToWindow()) {
+      mShimmerDrawable.startShimmer();
+    }
   }
 
   /** Stops the shimmer animation. */
