@@ -8,6 +8,7 @@
 
 package com.facebook.shimmer;
 
+import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -201,4 +202,25 @@ public class ShimmerFrameLayout extends FrameLayout {
   public void clearStaticAnimationProgress() {
     mShimmerDrawable.clearStaticAnimationProgress();
   }
+
+  public void addAnimatorListener(Animator.AnimatorListener listener) {
+    mShimmerDrawable.addAnimatorListener(listener);
+  }
+
+  public void removeAnimatorListener(Animator.AnimatorListener listener) {
+    mShimmerDrawable.removeAnimatorListener(listener);
+  }
+
+  public void removeAllAnimatorListeners() {
+    mShimmerDrawable.removeAllAnimatorListeners();
+  }
+
+  public void setRepeatCount(int count) {
+    mShimmerDrawable.setRepeatCount(count);
+  }
+
+  public int getRepeatCount() {
+    return mShimmerDrawable.getRepeatCount();
+  }
+
 }

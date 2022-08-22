@@ -8,6 +8,7 @@
 
 package com.facebook.shimmer;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -22,6 +23,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.view.animation.LinearInterpolator;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -169,6 +171,34 @@ public final class ShimmerDrawable extends Drawable {
     return mShimmer != null && (mShimmer.clipToChildren || mShimmer.alphaShimmer)
         ? PixelFormat.TRANSLUCENT
         : PixelFormat.OPAQUE;
+  }
+
+  public void setRepeatCount(int count) {
+    if (mValueAnimator != null) {
+      mValueAnimator.setRepeatCount(count);
+    }
+  }
+
+  public int getRepeatCount() {
+    return mValueAnimator != null ? mValueAnimator.getRepeatCount() : 0;
+  }
+
+  public void addAnimatorListener(Animator.AnimatorListener listener) {
+    if (mValueAnimator != null) {
+      mValueAnimator.addListener(listener);
+    }
+  }
+
+  public void removeAnimatorListener(Animator.AnimatorListener listener) {
+    if (mValueAnimator != null) {
+      mValueAnimator.removeListener(listener);
+    }
+  }
+
+  public void removeAllAnimatorListeners() {
+    if (mValueAnimator != null) {
+      mValueAnimator.removeAllListeners();
+    }
   }
 
   private float offset(float start, float end, float percent) {
